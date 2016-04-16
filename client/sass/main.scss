@@ -16,7 +16,7 @@
       padding:5px 5px;
       text-align: center;
       font-size: 2.0em;
-      color:lightgray;
+      color:$lightText;
     }
   }
 
@@ -30,7 +30,6 @@
     .middle-left {
       flex:0 0 15%;
       padding: 4px;
-      //border: 1px dashed darkgray;
 
       .burger {
         width:100%;
@@ -47,7 +46,7 @@
       height:100%;
 
       font-size: 2.0em;
-      color: rgb(145,145,145);
+      color: $darkText;
 
       .dashboard {
         background-color: $dashboard;
