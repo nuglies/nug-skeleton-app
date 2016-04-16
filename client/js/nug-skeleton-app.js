@@ -7,12 +7,14 @@
   nugNgApp.config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('dashboard', {
-        url: "/dashboard",
-        templateUrl: "partials/dashboard.html"
+        url: '/dashboard',
+        templateUrl: 'partials/dashboard.html',
+        controller: 'dashboardCtrl'
       })
       .state('settings', {
-        url: "/state2",
-        templateUrl: "partials/settings.html"
+        url: '/state2',
+        templateUrl: 'partials/settings.html',
+        controller: 'settingsCtrl'
       });
   });
 

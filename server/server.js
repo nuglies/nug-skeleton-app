@@ -37,6 +37,17 @@ module.exports = (() => {
     next();
   });
 
+  let dashboardHandler = (req,res,next) => {
+    let mockData = [
+      'dashboard item one',
+      'dashboard item two',
+      'dashboard item three'
+    ]
+    res.json(mockData)
+  }
+
+  app.get('/dashboard', dashboardHandler)
+
   app.listen(port, () => {
     console.log(`listening on ${port}`)
   })
