@@ -1,0 +1,53 @@
+body {
+  font-family: "Verdada", Verdana, sans-serif;
+}
+.health-widget {}
+.health-widget .heading {
+  font-size: 2.0em;
+  text-align: center;
+}
+.health-widget .graph {}
+.health-widget .graph .graph-stage {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+}
+.health-widget .graph .graph-stage .stage-spacer {
+  flex: 0 0 20%;
+  white-space: nowrap;
+}
+.health-widget .graph .graph-stage .stage-rows {
+  flex: 1;
+}
+.health-widget .graph .graph-stage .stage-label {
+  margin: 2px;
+  padding: 2px 2px 2px 0;
+  flex: 0 0 10%;
+  text-align: right;
+  border-right: 4px solid lightgray;
+}
+.health-widget .graph .graph-stage .graph-row {
+  display: flex;
+  flex-direction: row;
+  flex: 0 0 80%;
+}
+.health-widget .graph .graph-stage .graph-row .row-label {
+  flex: 0 0 10%;
+  text-align: right;
+}
+.health-widget .graph .graph-stage .graph-row .row-boxes {
+  flex: 0 0 90%;
+  display: flex;
+  flex-direction: row;
+}
+.health-widget .graph .graph-stage .graph-row .row-boxes .box {
+  flex: 1;
+  background-color: green;
+  width: 100%;
+  margin: 1;
+  border: 1px solid white;
+}
+.health-widget .graph .graph-stage .graph-row .row-boxes .box.error {
+  background-color: red;
+}

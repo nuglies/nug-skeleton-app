@@ -1,0 +1,43 @@
+.alerts-widget {
+  flex: 0 0 30%;
+  .heading {
+    font-size: 2em;
+    border-bottom: 5px solid darkgray;
+    margin-bottom: 3px;
+  }
+  .item {
+    //border: 1px dashed blue;
+    display: flex;
+    flex-direction: row;
+    &:hover {
+      background-color: darkgray;
+    }
+    .icon-prefix {
+      flex: 0 0 2%;
+      margin: auto;
+    }
+    .item-icon {
+      //border: 1px solid white;
+      flex: 0 0 5%;
+      margin: auto;
+      text-align: center;
+      .nugicon {
+        font-size: 1.7em;
+      }
+    }
+    .item-text {
+      flex: 0 0 93%;
+      padding-left: 0.4em;
+      margin: auto;
+      .text {}
+      .subtext {
+        font-size: 0.6em;
+        text-decoration: italics;
+        font-style: italic;
+      }
+    }
+    .item-controls {
+      flex: 0 0 5%;
+    }
+  }
+}
