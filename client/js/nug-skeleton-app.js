@@ -12,7 +12,7 @@
         controller: 'dashboardCtrl'
       })
       .state('settings', {
-        url: '/state2',
+        url: '/settings',
         templateUrl: 'partials/settings.html',
         controller: 'settingsCtrl'
       });

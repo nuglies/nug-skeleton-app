@@ -79,17 +79,18 @@ a {
     .main-content .middle .middle-left {
       flex: 0 0 15%;
       padding: 4px; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/opt\/projects\/nug-skeleton-app\/client\/sass\/main\.scss}line{font-family:\0000335}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/opt\/projects\/nug-skeleton-app\/client\/sass\/main\.scss}line{font-family:\0000334}}
       .main-content .middle .middle-left .burger {
         width: 100%;
         text-align: right; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/opt\/projects\/nug-skeleton-app\/client\/sass\/main\.scss}line{font-family:\0000340}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/opt\/projects\/nug-skeleton-app\/client\/sass\/main\.scss}line{font-family:\0000339}}
       .main-content .middle .middle-left a {
         display: block; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/opt\/projects\/nug-skeleton-app\/client\/sass\/main\.scss}line{font-family:\0000345}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/opt\/projects\/nug-skeleton-app\/client\/sass\/main\.scss}line{font-family:\0000344}}
     .main-content .middle .middle-center {
       flex: 0 0 84%;
       height: 100%;
+      background-color: #bebebe;
       font-size: 2.0em;
       color: #919191; }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/opt\/projects\/nug-skeleton-app\/client\/sass\/main\.scss}line{font-family:\0000352}}
