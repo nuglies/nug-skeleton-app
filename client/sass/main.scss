@@ -1,0 +1,86 @@
+@import 'base';
+@import 'colors';
+
+
+.main-content {
+  display:flex;
+  flex-direction: column;
+  height:100%;
+
+  .header {
+    flex: 0 0 15%;
+    background-color: $header;
+
+    h3 {
+      margin:0;
+      padding:5px 5px;
+      text-align: center;
+      font-size: 2.0em;
+      color:lightgray;
+    }
+  }
+
+  .middle {
+    flex: 0 0 75%;
+    background-color:$middle;
+    display:flex;
+    flex-direction: row;
+    height:100%;
+
+    .middle-left {
+      flex:0 0 15%;
+      padding: 4px;
+      //border: 1px dashed darkgray;
+
+      .burger {
+        width:100%;
+        text-align: right;
+      }
+
+      a {
+        display:block;
+      }
+    }
+
+    .middle-center {
+      flex: 0 0 84%;
+      height:100%;
+
+      font-size: 2.0em;
+      color: rgb(145,145,145);
+
+      .dashboard {
+        background-color: $dashboard;
+        display:flex;
+        flex-direction: column;
+        height:100%;
+
+        h3 {
+          text-align:center;
+          flex: 0 0 10%;
+        }
+
+        .dashboard-content {
+          flex: 0 0 90%;
+        }
+      }
+
+      .settings {
+        background-color: $settings;
+        display:flex;
+        flex-direction:column;
+        height:100%;
+
+        h3 {
+          text-align: center;
+        }
+      }
+
+    }
+  }
+
+  .bottom {
+    flex: 0 0 10%;
+    background-color: $bottom;
+  }
+}

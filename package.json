@@ -1,0 +1,30 @@
+{
+  "name": "nug-skeleton-app",
+  "version": "0.0.1",
+  "description": "nug skeleton example app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4",
+    "express-session": "^1.13.0",
+    "minimist": "^1.2.0",
+    "moment": "^2.12.0",
+    "mongo": "^0.1.0",
+    "morgan": "^1.7.0",
+    "path": "^0.12.7",
+    "promised-mongo": "^1.2.0",
+    "q": "^1.4.1",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-sass": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-express-server": "^0.5.2"
+  }
+}
