@@ -1,7 +1,7 @@
   'use strict';
 
   var nugNgApp = angular.module('nug-skeleton-app', [
-    'ui.router'
+    'ui.router','nouislider'
   ]);
 
   nugNgApp.config(function($stateProvider, $urlRouterProvider) {
@@ -15,7 +15,17 @@
         url: '/settings',
         templateUrl: 'partials/settings.html',
         controller: 'settingsCtrl'
+      })
+      .state('sensors', {
+        url: '/sensors',
+        templateUrl: 'partials/sensors.html',
+        controller: 'sensorsCtrl'
       });
+
+      
+      
+      
+      
   });
 
   nugNgApp
