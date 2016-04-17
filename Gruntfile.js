@@ -3,7 +3,7 @@
 module.exports = (grunt) => {
 
     // converts .scss files to .css files
-    grunt.loadNpmTasks('grunt-contrib-sass')
+    grunt.loadNpmTasks('grunt-sass')
 
     // monitors .scss files for changes and runs the sass task if they change
     grunt.loadNpmTasks('grunt-contrib-watch')
