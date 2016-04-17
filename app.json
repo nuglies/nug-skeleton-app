@@ -1,0 +1,8 @@
+{
+  "name": "nug-skeleton-app",
+  "description": "Basic scaffold for the nug project",
+  "repository": "https://github.com/nuglies/nug-skeleton-app",
+  "logo": "http://node-js-sample.herokuapp.com/node.svg",
+  "keywords": ["node", "express", "static"],
+  "image": "heroku/nodejs"
+}
