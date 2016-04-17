@@ -5,7 +5,7 @@
   "main": "index.js",
   "repository": "https://github.com/nuglies/nug-skeleton-app",
   "scripts": {
-    "postinstall" : "bower install;grunt sass",
+    "postinstall": "bower install;grunt sass",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -28,6 +28,7 @@
   "devDependencies": {
     "grunt": "^1.0.1",
     "grunt-contrib-watch": "^1.0.0",
-    "grunt-express-server": "^0.5.2"
+    "grunt-express-server": "^0.5.2",
+    "grunt-sass": "^1.1.0"
   }
 }
