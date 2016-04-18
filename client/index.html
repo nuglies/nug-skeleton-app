@@ -9,15 +9,25 @@
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css">
     <link rel="stylesheet" href="css/healthChart.css">
     <link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="bower_components/nouislider/jquery.nouislider.css" />
 
+	<script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/moment/moment.js"></script>
+	<script src="bower_components/nouislider/jquery.nouislider.js"></script>
+	<script src="bower_components/nouislider/Link.js"></script>
+	<script src="bower_components/angular-nouislider/src/nouislider.js"></script>
+
 
     <script src="js/nug-skeleton-app.js"></script>
     <script src="js/dashboardCtrl.js"></script>
     <script src="js/settingsCtrl.js"></script>
+<<<<<<< HEAD
+    <script src="js/sensorsCtrl.js"></script>
+=======
     <script src="js/healthChartDirective.js"></script>
+>>>>>>> master
   </head>
 
   <body ng-app="nug-skeleton-app">
@@ -32,6 +42,7 @@
           <i class="burger fa fa-bars" aria-hidden="true"></i>
           <a ui-sref="dashboard">dashboard</a>
           <a ui-sref="settings">settings</a>
+          <a ui-sref="sensors">sensors</a>
         </div>
 
         <div ui-view class="middle-center"></div>

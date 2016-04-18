@@ -23,9 +23,12 @@
     "angular-route": "^1.5.3",
     "font-awesome": "^4.6.1",
     "angular-ui-router": "^0.2.18",
-    "moment": "^2.12.0"
+    "moment": "^2.12.0",
+    "nouislider": "^8.4.0"
   },
   "resolutions": {
-    "angular": "^1.5.4"
+    "angular": "~1.2.6",
+    "nouislider": "~6.2.0",
+    "jquery": "~2.1.0"
   }
 }

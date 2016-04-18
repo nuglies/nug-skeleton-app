@@ -10,3 +10,6 @@ nugNgApp.controller('settingsCtrl', ['$scope', '$http', function($scope, $http) 
   init();
 
 }])
+
+
+
