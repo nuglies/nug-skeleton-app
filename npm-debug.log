@@ -1,0 +1,126 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'install' ]
+2 info using npm@2.15.0
+3 info using node@v4.4.2
+4 verbose readDependencies loading dependencies from /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app/package.json
+5 warn package.json nug-skeleton-app@0.0.1 No repository field.
+6 verbose install where, deps [ '/Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app',
+6 verbose install   [ 'body-parser',
+6 verbose install     'express',
+6 verbose install     'express-session',
+6 verbose install     'minimist',
+6 verbose install     'moment',
+6 verbose install     'mongo',
+6 verbose install     'morgan',
+6 verbose install     'path',
+6 verbose install     'promised-mongo',
+6 verbose install     'q',
+6 verbose install     'underscore',
+6 verbose install     'grunt',
+6 verbose install     'grunt-contrib-sass',
+6 verbose install     'grunt-contrib-watch',
+6 verbose install     'grunt-express-server' ] ]
+7 verbose install where, peers [ '/Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app', [] ]
+8 verbose installManyTop reading for lifecycle /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app/package.json
+9 info preinstall nug-skeleton-app@0.0.1
+10 verbose installManyTop reading scoped package data from /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app/node_modules/body-parser/package.json
+11 verbose installManyTop reading scoped package data from /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app/node_modules/express/package.json
+12 verbose installManyTop reading scoped package data from /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app/node_modules/express-session/package.json
+13 verbose installManyTop reading scoped package data from /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app/node_modules/grunt/package.json
+14 verbose installManyTop reading scoped package data from /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app/node_modules/grunt-contrib-sass/package.json
+15 verbose installManyTop reading scoped package data from /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app/node_modules/grunt-contrib-watch/package.json
+16 verbose installManyTop reading scoped package data from /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app/node_modules/grunt-express-server/package.json
+17 verbose installManyTop reading scoped package data from /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app/node_modules/minimist/package.json
+18 verbose installManyTop reading scoped package data from /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app/node_modules/moment/package.json
+19 verbose installManyTop reading scoped package data from /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app/node_modules/mongo/package.json
+20 verbose installManyTop reading scoped package data from /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app/node_modules/morgan/package.json
+21 verbose installManyTop reading scoped package data from /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app/node_modules/path/package.json
+22 verbose installManyTop reading scoped package data from /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app/node_modules/promised-mongo/package.json
+23 verbose installManyTop reading scoped package data from /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app/node_modules/q/package.json
+24 verbose installManyTop reading scoped package data from /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app/node_modules/underscore/package.json
+25 info package.json mongo@0.1.0 No repository field.
+26 info package.json mongo@0.1.0 No README data
+27 info package.json mongo@0.1.0 No license field.
+28 info package.json grunt-express-server@0.5.2 No license field.
+29 info package.json path@0.12.7 path is also the name of a node core module.
+30 info package.json q@1.4.1 license should be a valid SPDX license expression
+31 verbose readDependencies loading dependencies from /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app/package.json
+32 verbose targetResolver reading package data from /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app/node_modules/body-parser/package.json
+33 verbose targetResolver reading package data from /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app/node_modules/express/package.json
+34 verbose targetResolver reading package data from /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app/node_modules/express-session/package.json
+35 verbose targetResolver reading package data from /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app/node_modules/grunt/package.json
+36 verbose targetResolver reading package data from /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app/node_modules/grunt-contrib-sass/package.json
+37 verbose targetResolver reading package data from /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app/node_modules/grunt-contrib-watch/package.json
+38 verbose targetResolver reading package data from /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app/node_modules/grunt-express-server/package.json
+39 verbose targetResolver reading package data from /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app/node_modules/minimist/package.json
+40 verbose targetResolver reading package data from /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app/node_modules/moment/package.json
+41 verbose targetResolver reading package data from /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app/node_modules/mongo/package.json
+42 verbose targetResolver reading package data from /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app/node_modules/morgan/package.json
+43 verbose targetResolver reading package data from /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app/node_modules/path/package.json
+44 verbose targetResolver reading package data from /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app/node_modules/promised-mongo/package.json
+45 verbose targetResolver reading package data from /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app/node_modules/q/package.json
+46 verbose targetResolver reading package data from /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app/node_modules/underscore/package.json
+47 verbose targetResolver reading package data from /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app/node_modules/.bin/grunt/package.json
+48 verbose already installed skipping mongo@^0.1.0 /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app
+49 verbose already installed skipping morgan@^1.7.0 /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app
+50 verbose already installed skipping path@^0.12.7 /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app
+51 verbose already installed skipping promised-mongo@^1.2.0 /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app
+52 verbose already installed skipping q@^1.4.1 /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app
+53 verbose already installed skipping underscore@^1.8.3 /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app
+54 verbose already installed skipping grunt@^1.0.1 /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app
+55 verbose already installed skipping grunt-contrib-sass@^1.0.0 /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app
+56 verbose already installed skipping grunt-contrib-watch@^1.0.0 /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app
+57 verbose already installed skipping grunt-express-server@^0.5.2 /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app
+58 verbose already installed skipping body-parser@^1.15.0 /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app
+59 verbose already installed skipping express@^4.13.4 /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app
+60 verbose already installed skipping express-session@^1.13.0 /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app
+61 verbose already installed skipping minimist@^1.2.0 /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app
+62 verbose already installed skipping moment@^2.12.0 /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app
+63 silly install resolved []
+64 info build /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app
+65 info linkStuff nug-skeleton-app@0.0.1
+66 silly linkStuff nug-skeleton-app@0.0.1 has /Users/alexgorelik/nodeWorld/nuglies as its parent node_modules
+67 verbose linkBins nug-skeleton-app@0.0.1
+68 verbose linkMans nug-skeleton-app@0.0.1
+69 verbose rebuildBundles nug-skeleton-app@0.0.1
+70 verbose rebuildBundles [ '.bin',
+70 verbose rebuildBundles   'body-parser',
+70 verbose rebuildBundles   'express',
+70 verbose rebuildBundles   'express-session',
+70 verbose rebuildBundles   'grunt',
+70 verbose rebuildBundles   'grunt-contrib-sass',
+70 verbose rebuildBundles   'grunt-contrib-watch',
+70 verbose rebuildBundles   'grunt-express-server',
+70 verbose rebuildBundles   'minimist',
+70 verbose rebuildBundles   'moment',
+70 verbose rebuildBundles   'mongo',
+70 verbose rebuildBundles   'morgan',
+70 verbose rebuildBundles   'path',
+70 verbose rebuildBundles   'promised-mongo',
+70 verbose rebuildBundles   'q',
+70 verbose rebuildBundles   'underscore' ]
+71 info install nug-skeleton-app@0.0.1
+72 info postinstall nug-skeleton-app@0.0.1
+73 info prepublish nug-skeleton-app@0.0.1
+74 verbose validateInstall loading /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app/package.json for validation
+75 verbose stack Error: The package grunt@1.0.1 does not satisfy its siblings' peerDependencies requirements!
+75 verbose stack     at /usr/local/lib/node_modules/npm/lib/install.js:125:32
+75 verbose stack     at /usr/local/lib/node_modules/npm/lib/install.js:268:7
+75 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:142:5
+75 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+75 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+75 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+75 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+75 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+75 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+75 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+76 verbose cwd /Users/alexgorelik/nodeWorld/nuglies/nug-skeleton-app
+77 error Darwin 15.3.0
+78 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "install"
+79 error node v4.4.2
+80 error npm  v2.15.0
+81 error code EPEERINVALID
+82 error peerinvalid The package grunt@1.0.1 does not satisfy its siblings' peerDependencies requirements!
+82 error peerinvalid Peer grunt-express-server@0.5.2 wants grunt@~0.4.0
+82 error peerinvalid Peer grunt-contrib-sass@1.0.0 wants grunt@>=0.4.0
+83 verbose exit [ 1, true ]

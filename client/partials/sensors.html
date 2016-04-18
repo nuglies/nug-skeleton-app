@@ -1,0 +1,58 @@
+<!doctype html>
+<style>
+.container {
+height:200px; 
+border: 1px solid;   
+	overflow-y: scroll;
+    overflow-x:hidden;
+}
+#red, #blue {
+				margin: 10px;
+				display: inline-block;
+				height: 200px;
+				float:left;
+
+			}
+
+	#red {
+	background: #c0392b;
+	}
+
+	#blue {
+	background: #2980b9;
+	}
+
+</style>
+<div class="sensors">
+  <h3>Sensors</h3>
+<div class="sensors-content">
+	<div class="container">
+  	<div class="row">
+	
+  	<h4 ng-init="test.from = 5; test.to = 40;">PAR:</h4>
+        <div id="PAR" slider ng-from="test.from" ng-to="test.to" start=0 end=100  step=1 callback=change></div>
+        <!--<p>Binded data: from - <span ng-bind="test.from"></span>, to - <span ng-bind="test.to"></span></p>-->
+        <p>From: <input type="number" ng-model="test.from">, To: <input type="number" ng-model="test.to"></p>
+    </div>    
+    <div class="row">
+	<p>
+	  <span ng-init="test.red = 0">Red:</span>
+	  <span ng-init="test.blue = 0">Blue:</span>
+	</p>
+	  <div id="red" slider ng-blue="test.red" ng-model="test.red" start=1 end=10 ></div>
+
+	  <div id="blue" slider ng-blue="test.blue" ng-model="test.blue" start=1 end=10 ></div>
+	  <!--<p>Red bind: <span ng-bind="test.red"></span></p>-->
+	  <p>Red: <input type="number" ng-model="test.red"></p>
+
+	  <!--<p>Blue bind: <span ng-bind="test.blue"></span></p>-->
+	  <p>Blue: <input type="number" ng-model="test.blue"></p>
+	  
+	</div>
+		 
+        
+        
+	</div><!--container-->
+
+ </div> <!--sensors-content-->
+</div> <!--sensors-->
