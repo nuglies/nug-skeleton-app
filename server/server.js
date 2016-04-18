@@ -17,7 +17,7 @@ const path = require('path')
 
 module.exports = (() => {
 
-  let port = argv.port || 3000
+  let port = process.env.PORT || 5000
 
   let app = express()
   app.use(express.static(path.join(__dirname, '../client')));

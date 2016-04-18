@@ -9,3 +9,4 @@ server.log
 app/styles/*.css.map
 .wuAPIKey
 .DS_Store
+client/css
