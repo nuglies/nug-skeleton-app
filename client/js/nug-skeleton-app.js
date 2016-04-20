@@ -1,7 +1,7 @@
   'use strict';
 
   var nugNgApp = angular.module('nug-skeleton-app', [
-    'ui.router'
+    'ui.router','ui.knob'
   ]);
 
   nugNgApp.config(function($stateProvider, $urlRouterProvider) {
@@ -15,6 +15,11 @@
         url: '/settings',
         templateUrl: 'partials/settings.html',
         controller: 'settingsCtrl'
+      })
+    .state('knobs', {
+        url: '/knobs',
+        templateUrl: 'partials/knobs.html',
+        controller: 'knobsCtrl'
       });
   });
 
