@@ -23,7 +23,8 @@
     "angular-route": "^1.5.3",
     "font-awesome": "^4.6.1",
     "angular-ui-router": "^0.2.18",
-    "moment": "^2.12.0"
+    "moment": "^2.12.0",
+    "ng-knob": "^0.1.3"
   },
   "resolutions": {
     "angular": "^1.5.4"

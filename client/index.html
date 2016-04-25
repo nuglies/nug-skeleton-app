@@ -9,15 +9,24 @@
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css">
     <link rel="stylesheet" href="css/healthChart.css">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/sensors.css">
 
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/moment/moment.js"></script>
 
+    <!--supports ng-knob-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.10/d3.min.js"></script>
+	<!--required for ng-knob-->
+	<script src="bower_components/ng-knob/dist/ng-knob.min.js"></script>
+	
+	
     <script src="js/nug-skeleton-app.js"></script>
     <script src="js/dashboardCtrl.js"></script>
     <script src="js/settingsCtrl.js"></script>
+    <script src="js/knobsCtrl.js"></script>
     <script src="js/healthChartDirective.js"></script>
+    
   </head>
 
   <body ng-app="nug-skeleton-app">
@@ -32,6 +41,7 @@
           <i class="burger fa fa-bars" aria-hidden="true"></i>
           <a ui-sref="dashboard">dashboard</a>
           <a ui-sref="settings">settings</a>
+          <a ui-sref="knobs">knobs</a>
         </div>
 
         <div ui-view class="middle-center"></div>
