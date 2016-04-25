@@ -6,28 +6,33 @@ nugNgApp.controller('knobsCtrl', ['$scope', '$http', function($scope, $http) {
 
 
 	
+    $scope.knobsCtrlMaxOffVal = 80;
+    $scope.knobsCtrlMaxOffOpt = {
+      skin: {
+        type: 'tron'
+      },
+      size: 300,
+      unit: "°F",
+      barWidth: 40,
+      bgColor: '#2C3E50',
+  	  barColor: '#FFAE1A',
+  	  textColor: '#eee',
+      
      
-
-  };
-
-
-
-
-
-
-
-  init();
-  
-  
-
-}])
-
-
-
-nugNgApp.controller('knobsCtrlMinOn', function ($scope) {
+      step: 1,
+      displayPrevious: true
+    };
     
- $scope.value = 70;
-    $scope.options = {
+    
+    
+     $scope.$watch('knobsCtrlMaxOffVal', function(newVal) {
+    console.log('new value is ', newVal);
+  })
+    
+    
+    
+ $scope.knobsCtrlMinOnVal = 70;
+    $scope.knobsCtrlMinOnOpt = {
       
       size: 300,
       unit: "°F",
@@ -45,17 +50,13 @@ nugNgApp.controller('knobsCtrlMinOn', function ($scope) {
       displayInput: true
     };
     
-      $scope.$watch('value', function(newVal) {
+      $scope.$watch('knobsCtrlMinOnVal', function(newVal) {
     console.log('new value is ', newVal);
   })
-})
-
-
-nugNgApp.controller('knobsCtrlMinOff', function ($scope) {
-    
-    
-    $scope.value = 65;
-    $scope.options = {
+  
+  
+    $scope.knobsCtrlMinOffVal = 65;
+    $scope.knobsCtrlMinOffOpt = {
       skin: {
         type: 'tron'
       },
@@ -71,20 +72,14 @@ nugNgApp.controller('knobsCtrlMinOff', function ($scope) {
       displayPrevious: true
     };
     
-     $scope.$watch('value', function(newVal) {
+     $scope.$watch('knobsCtrlMinOffVal', function(newVal) {
     console.log('new value is ', newVal);
   })
-    
-    
-    
-  })
-  
-  
-  nugNgApp.controller('knobsCtrlMaxOn', function ($scope) {
-    
-    
-     $scope.value = 90;
-     $scope.options = {
+     
+     
+     
+     $scope.knobsCtrlMaxOnVal = 90;
+     $scope.knobsCtrlMaxOnOpt = {
      size: 300,
      unit: "°F",
       barWidth: 40,
@@ -101,39 +96,24 @@ nugNgApp.controller('knobsCtrlMinOff', function ($scope) {
       displayInput: true
     };
     
-      $scope.$watch('value', function(newVal) {
+      $scope.$watch('knobsCtrlMaxOnVal', function(newVal) {
     console.log('new value is ', newVal);
-  })
-})
-  
-  
-  nugNgApp.controller('knobsCtrlMaxOff', function ($scope) {
-    
-    
-    $scope.value = 80;
-    $scope.options = {
-      skin: {
-        type: 'tron'
-      },
-      size: 300,
-      unit: "°F",
-      barWidth: 40,
-      bgColor: '#2C3E50',
-  	  barColor: '#FFAE1A',
-  	  textColor: '#eee',
-      
-     
-      step: 1,
-      displayPrevious: true
-    };
-    
-    
-    
-     $scope.$watch('value', function(newVal) {
-    console.log('new value is ', newVal);
-  })
-    
   })
 
-    
+  }; //init
+
+
+
+
+
+
+
+  init();
+  
+  
+
+}])
+
+
+
   
