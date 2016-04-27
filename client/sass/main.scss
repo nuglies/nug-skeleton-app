@@ -10,7 +10,11 @@
   .header {
     flex: 0 0 15%;
     background-color: $header;
-
+	
+	#userInfo {
+	float:right;
+	}
+    
     h3 {
       margin:0;
       padding:5px 5px;

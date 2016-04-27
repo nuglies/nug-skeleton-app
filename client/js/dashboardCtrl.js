@@ -13,6 +13,11 @@ nugNgApp.controller('dashboardCtrl', ['$scope', '$http', function($scope, $http)
           console.log('caught error requesting /dashboard', error);
         }
       )
+  
+  
+
+  	
+  	
   };
 
   init();
