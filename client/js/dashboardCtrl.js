@@ -1,6 +1,6 @@
 'use strict';
 
-nugNgApp.controller('dashboardCtrl', ['$scope', '$http','auth','$location', 'store', function($scope, $http, auth, $location, store) {
+nugNgApp.controller('dashboardCtrl', ['$scope', '$http', function($scope, $http) {
 
   var init = function() {
 
@@ -14,15 +14,8 @@ nugNgApp.controller('dashboardCtrl', ['$scope', '$http','auth','$location', 'sto
         }
       )
   
-  $scope.auth = auth;
   
 
-	$scope.logout = function() {
-    auth.signout();
-    store.remove('profile');
-    store.remove('token');
-    $location.path('/login');
-  	}
   	
   	
   };

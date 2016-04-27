@@ -10,17 +10,25 @@
         url: '/dashboard',
         templateUrl: 'partials/dashboard.html',
         controller: 'dashboardCtrl',
-        requiresLogin: true
+        data: {
+     		requiresLogin: true
+   		}
       })
       .state('settings', {
         url: '/settings',
         templateUrl: 'partials/settings.html',
-        controller: 'settingsCtrl'
+        controller: 'settingsCtrl',
+         data: {
+     		requiresLogin: true
+   		}
       })
     .state('knobs', {
         url: '/knobs',
         templateUrl: 'partials/knobs.html',
-        controller: 'knobsCtrl'
+        controller: 'knobsCtrl',
+         data: {
+     		requiresLogin: true
+   		}
       })
 	  .state('login', {
 		url: '/login',
@@ -36,7 +44,9 @@
 		clientID: 'TdtdYCDQHSR3TtNgsMuCXHfjHDyxMsmB',
 		callbackURL: location.href,
     	// Here include the URL to redirect to if the user tries to access a resource when not authenticated.
-    	loginUrl: '/login'
+    	loginUrl: '/login',
+    	loginState: 'login'
+    	
 		});
 		
 	authProvider.on('loginSuccess', function($location, profilePromise, idToken, store) {
@@ -56,7 +66,8 @@
 	
 	
 	});
-
+	
+	
 	authProvider.on('loginFailure', function() {
 	   // Error Callback
 	});
@@ -97,6 +108,7 @@
   nugNgApp
     .controller('main-controller', ['$scope', function($scope) {
       $scope.hello = 'world';
+      
    
     }]);
 

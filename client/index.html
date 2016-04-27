@@ -48,7 +48,10 @@
     <div class="main-content">
       <div class="header">
         <h3>header</h3>
-		<div id='logoutButton'></div>
+		<div ng-show="auth.profile.nickname" id="userInfo" ng-controller="logoutCtrl">
+			<div>Welcome {{auth.profile.nickname}} 
+			<button ng-click="logout()">Logout</button></div>
+		</div>
       </div>
 
       <div class="middle">
@@ -57,7 +60,7 @@
           <a ui-sref="dashboard">dashboard</a>
           <a ui-sref="settings">settings</a>
           <a ui-sref="knobs">knobs</a>
-          <a ui-sref="login">login</a>
+         
         </div>
 
         <div ui-view class="middle-center"></div>
