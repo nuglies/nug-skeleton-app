@@ -23,7 +23,9 @@
     "angular-route": "^1.5.3",
     "font-awesome": "^4.6.1",
     "angular-ui-router": "^0.2.18",
-    "moment": "^2.12.0"
+    "moment": "^2.12.0",
+    "ngTimepicker": "git://github.com/jkuri/ngTimepicker.git",
+    "angular-time-picker": "^1.0.0"
   },
   "resolutions": {
     "angular": "^1.5.4"

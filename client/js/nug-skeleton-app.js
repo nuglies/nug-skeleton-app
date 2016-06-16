@@ -1,10 +1,10 @@
   'use strict';
 
   var nugNgApp = angular.module('nug-skeleton-app', [
-    'ui.router','auth0', 'angular-storage', 'angular-jwt'
+    'ui.router','auth0', 'angular-storage', 'angular-jwt','ngCookies', 'ui.knob','angularAwesomeSlider','wingify.timePicker'
   ]);
 
-  nugNgApp.config(function($stateProvider, $urlRouterProvider, authProvider, $httpProvider, jwtInterceptorProvider) {
+  nugNgApp.config(function($stateProvider, $urlRouterProvider, $httpProvider, authProvider, jwtInterceptorProvider) {
     $stateProvider
       .state('dashboard', {
         url: '/dashboard',
@@ -14,6 +14,30 @@
      		requiresLogin: true
    		}
       })
+      .state('register', {
+        url: '/register',
+        templateUrl: 'partials/register.html',
+        controller: 'registerCtrl',
+        data: {
+     		requiresLogin: true
+   		}
+      })
+      .state('slider', {
+      url: '/slider/{id}',
+      templateUrl: 'partials/slider.html',
+      controller: 'slideCtrl',
+      resolve: {
+		sensor: ['$stateParams', 'sensorlist', function($stateParams, sensorlist) {
+		  return sensorlist.get($stateParams.id);
+			}],
+			/*
+		sensorsettings: ['$stateParams', 'sensorlist', function($stateParams, sensorlist) {
+		  return sensorlist.getSettings($stateParams.id);
+			}],
+			*/
+			
+		}
+    })
       .state('settings', {
         url: '/settings',
         templateUrl: 'partials/settings.html',
@@ -29,6 +53,8 @@
 	  })
 	;
   
+  
+
   	//used for Auth0
   
 		authProvider.init({
@@ -42,10 +68,10 @@
 		});
 		
 	authProvider.on('loginSuccess', function($location, profilePromise, idToken, store) {
-	  console.log("Login Success");
+	  //console.log("Login Success");
 	  profilePromise.then(function(profile) {
 		store.set('profile', profile);
-	//	console.log(profile);
+	//	console.log(profile.identities[0].user_id);
 	  
 		store.set('token', idToken);
 		
@@ -73,11 +99,15 @@
   $httpProvider.interceptors.push('jwtInterceptor');
   
   
-  }).run(function($rootScope, auth, store, jwtHelper, $location) {
+  })
+  
+
+  .run(function($rootScope, auth, store, jwtHelper, $location) {
   // This events gets triggered on refresh or URL change
   $rootScope.$on('$locationChangeStart', function() {
   
-   
+   	
+    
     var token = store.get('token');
     if (token) {
       if (!jwtHelper.isTokenExpired(token)) {
@@ -93,16 +123,18 @@
   
   }) //run
  .run(function(auth) {
-  // This hooks al auth events to check everything as soon as the app starts
+  // This hooks all auth events to check everything as soon as the app starts
   auth.hookEvents();
-});
+})
+
+;
 
   nugNgApp
     .controller('main-controller', ['$scope', function($scope) {
       $scope.hello = 'world';
       
-   
     }]);
+
 
 
 

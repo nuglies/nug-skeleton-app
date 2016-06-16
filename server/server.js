@@ -49,7 +49,7 @@ module.exports = (() => {
     }
 
     app.post('/sensors', (req, res) => {
-
+		
         console.log(req.body)
         db.collection('sensors').insert(req.body)
             .then(() => {
@@ -75,7 +75,286 @@ module.exports = (() => {
                 })
             })
     })
+    
+    
+    
+    app.get('/sensordefaults', (req, res) => {
+    var customer_id = req.query.customer_id;
+    
+    
+    if(customer_id!=0) {
+    	//customer_id=pmongo.ObjectId(customer_id);
+    	customer_id = customer_id;
+    	
+    	
+    }  else {
+    	//console.log("is zero");
+    	customer_id = parseInt(customer_id);
+    	
+    	console.log(customer_id);
+    }
+    
+    
+    
+        db.collection('sensordefaults').findOne({
+		customer_id: customer_id
+		}).then(function(doc) {
+			// doc._id.toString() === '523209c4561c640000000001' 
+			console.log(doc);
+			
+			if(doc == null) {
+			
+			
+			
+			//customer level settings not found, search on customer 0
+			
+			
+			
+        db.collection('sensordefaults').findOne({
+		customer_id: parseInt(0)
+		}).then(function(doc) {
+			// doc._id.toString() === '523209c4561c640000000001' 
+			//console.log(doc);
+			
+			res.json(doc);
+		})
+		.catch(er => {
+							res.sendStatus(500, {
+								error: er
+							})
+						})
+						
+						
+			
+			} else {
+			//customer level settings found
+			res.json(doc);
+			
+			}
+		})
+		.catch(er => {
+							res.sendStatus(500, {
+								error: er
+							})
+						})
+    })
+    
+    
+  app.post('/sensordefaults', (req, res) => {
+		console.log('save settings');
+        console.log(req.body)
+        db.collection('sensordefaults').insert(req.body)
+            .then(() => {
+                console.log('inserted ok')
+                res.sendStatus(201)
+            })
+            .catch(er => {
+                res.sendStatus(500, {
+                    error: er
+                })
+            })
 
+    })
+    
+    
+	app.get('/sensors/:sensor', function(req, res) {
+	// db.unicorns.find({_id: ObjectId("TheObjectId")})
+	// req.paramse.sensor
+	
+    // find a document using a native ObjectId 
+db.collection('sensors').findOne({
+	_id: pmongo.ObjectId(req.params.sensor)
+}).then(function(doc) {
+	// doc._id.toString() === '523209c4561c640000000001' 
+	//console.log(doc);
+	res.json(doc);
+})
+.catch(er => {
+					res.sendStatus(500, {
+						error: er
+					})
+				})
+;
+
+
+    /*
+	 db.collection('sensors').find({_id:new ObjectId("574fae623f0649da072dd481")})
+				.then(results => {
+				console.log("results");
+				
+				console.log(results);
+					res.json(results)
+				})
+				.catch(er => {
+					res.sendStatus(500, {
+						error: er
+					})
+				})
+		*/		
+	
+	})
+
+
+
+
+/// user services
+    app.get('/clientId', (req, res) => {
+       res.json({"clientId":"TdtdYCDQHSR3TtNgsMuCXHfjHDyxMsmB"})
+    })
+
+
+	app.get('/users', (req, res) => {
+		  //console.log(req);
+		  var email = req.query.email;
+		  
+		  db.collection('users').find({
+		  'profile.email': email
+		  })
+            .then(results => {
+                res.json(results)
+            })
+            .catch(er => {
+                res.sendStatus(500, {
+                    error: er
+                })
+            })
+            
+		})
+
+
+
+  app.post('/users', (req, res) => {
+		console.log('save user');
+        console.log(req.body)
+        db.collection('users').insert(req.body)
+            .then(() => {
+                console.log('inserted ok')
+                res.sendStatus(201)
+            })
+            .catch(er => {
+                res.sendStatus(500, {
+                    error: er
+                })
+            })
+
+    })
+    
+
+  app.post('/customercode', (req, res) => {
+		console.log('get customer for secret code');
+        //console.log(req.body)
+        db.collection('customers').find({
+        	secretcode: req.body.params.secretcode
+        })
+            .then((results) => {
+            
+            	//console.log(results.length);
+            	
+            	if(results.length != 0) {
+            	
+            	//we got a match on secretcode - add user to database
+            		//console.log(results[0]._id);
+            		
+            		var customer_id=pmongo.ObjectId(results[0]._id);
+            		var userData = {
+            			customer_id: customer_id,
+            			isAdmin: req.body.params.isAdmin,
+            			profile: req.body.params.userData
+            			
+            		}; 
+            		
+            		
+            		 db.collection('users').insert(userData)
+            .then((userInserted) => {
+                console.log('inserted ok')
+                
+                
+                var rspJson = {
+                userid : userInserted._id,
+                customerid : customer_id
+                };
+                
+            	res.json(rspJson);
+                res.sendStatus(201);	
+            	
+                
+            })
+            .catch(er => {
+                res.sendStatus(500, {
+                    error: er
+                })
+            })
+
+    
+    
+    } //if 
+    	else {
+    		//no match on secretcode
+    		//console.log("no match");
+    		var rspJson = {userid : 0, customerid : 0}
+    		res.json(rspJson);
+    	
+    	}
+    }) //customer then
+    
+    }) //post
+    
+  app.post('/customers', (req, res) => {
+		console.log('save customer');
+        console.log(req.body)
+        
+        /*
+       db.collection('customers').insert(req.body, function(err,docsInserted){
+			console.log(err);
+			res.sendStatus(201);
+		})*/
+        
+        var companyData = {
+        customer : req.body.params.company,
+        secretcode : req.body.params.secretcode
+        }
+        
+        db.collection('customers').insert(companyData)
+            .then((docsInserted) => {
+                console.log(docsInserted);
+                
+                var userData = {
+                customer_id: docsInserted._id,
+                isAdmin: req.body.params.isAdmin,
+                profile: req.body.params.userData
+                }
+                
+                
+                db.collection('users').insert(userData)
+            .then((userInserted) => {
+                console.log('inserted ok')
+                
+                
+                var rspJson = {
+                userid : userInserted._id,
+                customerid : docsInserted._id
+                }
+                
+                
+                res.json(rspJson);
+                res.sendStatus(201);
+                 
+                //res.sendStatus(201)
+            })
+            .catch(er => {
+                res.sendStatus(500, {
+                    error: er
+                })
+            }); //insert user
+                
+                
+            })
+            .catch(er => {
+                res.sendStatus(500, {
+                    error: er
+                })
+            })
+    })
     app.get('/dashboard', dashboardHandler)
 
     app.listen(port, () => {

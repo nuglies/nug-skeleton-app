@@ -1,0 +1,33 @@
+<!-- register.html -->
+<!-- ... -->
+
+<h3>We monitor your grow operations for a low monthly fee</h3>
+<h4>{{message}}</h4>
+<form ng-submit="addUser()" novalidate>
+	  
+	  email: <input type="email" ng-disabled="!editEmail" class="form-control" ng-model="userForm.email" required></input><br/>
+	  <label>
+	    <input type="radio" ng-model="userForm.clientAction" value="new" ng-click="clientActUp()">
+		Register New Customer
+	  </label><br/>
+	  <label>
+		<input type="radio" ng-model="userForm.clientAction" value="join" ng-click="clientActUp()">
+		Join Existing Customer
+	  </label><br/>
+
+  	
+	
+	
+  	<div ng-show="companyfield">
+	  company name: <br/><input type="text" ng-model="userForm.company"></input><br/>
+	</div>
+	
+	<div ng-show="secretcode" required>
+	  company code:  <em>{{scMessage}}</em><br/>
+	  <input type="text" ng-model="userForm.secretCode" class="form-control" required></input><br/>
+	 
+	  </div>
+	<button type="submit">Register</button>
+</form>
+	
+<!-- ... -->
