@@ -12,5 +12,16 @@ margin:25px;
 
 .horizontalSlider {
 
-margin-top:10px; width:60%; 
+margin-top:10px; width:60%;
 }
+
+
+
+a.editLink:link, a.editLink:visited {
+color:#ff0000;text-decoration:underline;
+}
+
+a.editLink:hover, a.editLink:active {
+color:#ff0000;text-decoration:underline;cursor:pointer;
+}
+

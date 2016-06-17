@@ -1,12 +1,12 @@
  <div class="contain-scroll">
- 
+
   <h1>{{sensor.sensorName}}</h1>
   <h2>{{sensor.strain}}</h2>
   <h3>{{sensor.growState}}</h3>
   <form ng-submit="saveSettings()">
-  
+
    <button type="submit">Save Settings</button><br/>
-   
+
    <label>
     <input type="radio" ng-model="growState.state" value="clone" ng-click="growStateToggle()">
     Clone
@@ -20,15 +20,15 @@
     Flower
   </label><br/>
   {{growState.state}}
-  
- 
+
+
 
  <h3>Light Settings</h3>
- <a ng-click="isLightSetOpen = !isLightSetOpen; isTempSetOpen = false; isHumSetOpen = false">Edit</a>
+ <a ng-click="isLightSetOpen = !isLightSetOpen; isTempSetOpen = false; isHumSetOpen = false" class="editLink">Edit</a>
 
 
-<div ng-show="isLightSetOpen"> 
-<wy-time-picker 
+<div ng-show="isLightSetOpen">
+<wy-time-picker
     data-dropdown-toggle-state="timepicker.clock.dropdownToggleState"
     data-time-settings="timepicker.clock.time"
     data-theme="settings.third.theme"
@@ -40,8 +40,8 @@
  </div>
 
  <div ng-show="!isLightSetOpen">
- 
- 
+
+
    <strong>Lights On:</strong> {{strLightsOn}}<br/>
    <strong>Lights Off:</strong> {{strLightsOff}}<br/>
    <strong>Min Par:</strong> {{strMinParVal}}<br/>
@@ -53,106 +53,106 @@
     <div class="horizontalSlider">
         <input ng-model="parVal"  type="text" id="{{idPar}}" slider options="parOpt" ng-disabled="disabled" />
     </div>
-    
+
         <div class="horizontalSlider">
         	<input ng-model="blueVal"  type="text" id="{{bluePeak}}" slider options="blueOpt" ng-disabled="disabled" />
     	</div>
-    
+
 		<div class="horizontalSlider ">
 			<input ng-model="redVal"  type="text" id="{{redPeak}}" slider options="redOpt" ng-disabled="disabled" />
 		</div>
-   
+
  </div><!--sliders-->
 
- 
+
   <div class="knobs">
 
- 
-  
+
+
   <h3>Temperature</h3>
-  
-   <a ng-click="isTempSetOpen = !isTempSetOpen; isLightSetOpen=false;">Edit</a>
+
+   <a ng-click="isTempSetOpen = !isTempSetOpen; isLightSetOpen=false;" class="editLink">Edit</a>
    <div ng-show="!isTempSetOpen">
    <strong>Min Temp Lights On:</strong> {{strMinOnVal}}<br/>
    <strong>Max Temp Lights On:</strong> {{strMaxOnVal}}<br/>
    <strong>Min Temp Lights Off:</strong> {{strMinOffVal}}<br/>
    <strong>Max Temp Lights On:</strong> {{strMaxOffVal}}<br/>
-   
+
    </div>
-   
-   
+
+
    <div  ng-show="isTempSetOpen" id="tempSet">
    <div class="knob-left">
     <h5>Min Temp Lights On</h5>
     <ui-knob value="knobsCtrlMinOnVal"  options="knobsCtrlMinOnOpt" ></ui-knob>
-    
+
    </div> <!--knob left (min lights on)-->
-   
+
    <div>
      <h5>Min Temp Lights Off</h5>
     <ui-knob value="knobsCtrlMinOffVal"  options="knobsCtrlMinOffOpt"></ui-knob>
    </div> <!--knob right (min lights off)-->
-   
+
    <br clear="all"/>
    <div class="knob-left">
     <h5>Max Temp Lights On</h5>
     <ui-knob value="knobsCtrlMaxOnVal"  options="knobsCtrlMaxOnOpt" ></ui-knob>
-    
+
    </div> <!--knob left (max lights on) -->
-   
+
    <div>
      <h5>Max Temp Lights Off</h5>
     <ui-knob value="knobsCtrlMaxOffVal"  options="knobsCtrlMaxOffOpt"></ui-knob>
-   </div> <!--knob right (max lights off) --> 
-   
+   </div> <!--knob right (max lights off) -->
+
    </div><!--tempSet-->
-   
+
    <h3>Humidity</h3>
-   
-   <a ng-click="isHumSetOpen = !isHumSetOpen; isLightSetOpen=false;">Edit</a>
+
+   <a ng-click="isHumSetOpen = !isHumSetOpen; isLightSetOpen=false;" class="editLink">Edit</a>
    <div ng-show="!isHumSetOpen">
    <strong>Min Humidity Lights On:</strong> {{strMinHumOnVal}}<br/>
    <strong>Max Humidity Lights On:</strong> {{strMaxHumOnVal}}<br/>
    <strong>Min Humidity Lights Off:</strong> {{strMinHumOffVal}}<br/>
    <strong>Max Humidity Lights On:</strong> {{strMaxHumOffVal}}<br/>
-   
+
    </div>
    <div  ng-show="isHumSetOpen" id="humSet">
    <div class="knob-left">
     <h5>Min Humidity Lights On</h5>
     <ui-knob value="knobsCtrlMinHumOnVal"  options="knobsCtrlMinHumOnOpt" ></ui-knob>
-    
+
    </div> <!--knob left (max lights on) -->
-   
+
    <div>
      <h5>Min Humidity Lights Off</h5>
     <ui-knob value="knobsCtrlMinHumOffVal"  options="knobsCtrlMinHumOffOpt"></ui-knob>
-   </div> <!--knob right (max lights off) --> 
+   </div> <!--knob right (max lights off) -->
    <br clear="all"/>
-   
+
    <div class="knob-left">
     <h5>Max Humidity Lights On</h5>
     <ui-knob value="knobsCtrlMaxHumOnVal"  options="knobsCtrlMaxHumOnOpt" ></ui-knob>
-    
+
    </div> <!--knob left (max lights on) -->
-   
+
    <div>
      <h5>Max Humidity Lights Off</h5>
     <ui-knob value="knobsCtrlMaxHumOffVal"  options="knobsCtrlMaxHumOffOpt"></ui-knob>
-   </div> <!--knob right (max lights off) --> 
-   
+   </div> <!--knob right (max lights off) -->
+
    </div><!--humSet-->
 </div> <!--knobs-->
-  
 
-  
+
+
     <br clear="all"/>
-    
-    
+
+
   <ng-timepicker ng-model="ctrl.time4" step="30" theme="green" show-meridian="true"></ng-timepicker>
   <br clear="all"/>
   <button type="submit">Save Settings</button>
-    
+
   </form>
 
 </div><!--scroll-->
