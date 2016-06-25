@@ -72,9 +72,9 @@ module.exports = (() => {
     MongoClient.connect('mongodb://127.0.0.1:27017/sensorsMongoExample', function(err, db) {
     if(err) throw err;
 
-    var customer_id = req.query.customer_id;
+    var customerid = req.query.customerid;
         db.collection('sensors').find({
-        	customer_id: customer_id
+        	customerid: customerid
         }).toArray(function(err, results) {
         	res.json(results);
         })
