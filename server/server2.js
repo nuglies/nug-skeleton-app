@@ -8,11 +8,13 @@ const _ = require('underscore')
 const fs = require('fs')
 const bodyParser = require('body-parser')
 const session = require('express-session')
-const pmongo = require('promised-mongo')
 const moment = require('moment')
 const Q = require('q')
 const argv = require('minimist')(process.argv.slice(2));
 const path = require('path')
+const MongoClient = require('mongodb').MongoClient
+    , format = require('util').format,
+ ObjectID = require('mongodb').ObjectID
 
 
 module.exports = (() => {
@@ -26,7 +28,6 @@ module.exports = (() => {
         extended: true
     }));
 
-    let db = pmongo('mongodb://localhost/sensorsMongoExample')
 
     // Additional middleware which will set headers that we need on each request.
     app.use(function(req, res, next) {
@@ -49,8 +50,10 @@ module.exports = (() => {
     }
 
     app.post('/sensors', (req, res) => {
+		MongoClient.connect('mongodb://127.0.0.1:27017/sensorsMongoExample', function(err, db) {
+    	if(err) throw err;
 
-        console.log(req.body)
+        //console.log(req.body)
         db.collection('sensors').insert(req.body)
             .then(() => {
                 console.log('inserted ok')
@@ -61,27 +64,32 @@ module.exports = (() => {
                     error: er
                 })
             })
-
+		}) //
     })
 
     app.get('/sensors', (req, res) => {
 
-      var customerid = req.query.customerid;
-      console.log(customerid);
-        db.collection('sensors').find({customerid: customerid})
-            .then(results => {
-                res.json(results)
-            })
-            .catch(er => {
-                res.sendStatus(500, {
-                    error: er
-                })
-            })
+    MongoClient.connect('mongodb://127.0.0.1:27017/sensorsMongoExample', function(err, db) {
+    if(err) throw err;
+
+    var customer_id = req.query.customer_id;
+        db.collection('sensors').find({
+        	customer_id: customer_id
+        }).toArray(function(err, results) {
+        	res.json(results);
+        })
+
+
+        }) //
     })
 
 
 
     app.get('/sensordefaults', (req, res) => {
+
+    MongoClient.connect('mongodb://127.0.0.1:27017/sensorsMongoExample', function(err, db) {
+    if(err) throw err;
+
     var customer_id = req.query.customer_id;
 
 
@@ -101,7 +109,41 @@ module.exports = (() => {
 
         db.collection('sensordefaults').findOne({
 		customer_id: customer_id
-		}).then(function(doc) {
+		}, function (err,doc) {
+
+		if(doc == null) {
+
+		console.log("no result for customer");
+
+			//customer level settings not found, search on customer 0
+
+
+
+        db.collection('sensordefaults').findOne({
+		customer_id: parseInt(0)
+		}, function(err, defDoc) {
+
+			console.log(defDoc);
+			res.json(defDoc);
+		})
+
+
+
+			} else {
+			//customer level settings found
+
+			console.log("found results for this customer");
+			res.json(doc);
+
+			}
+
+		})
+
+
+
+
+		/*
+		.then(function(doc) {
 			// doc._id.toString() === '523209c4561c640000000001'
 			//console.log(doc);
 
@@ -140,6 +182,10 @@ module.exports = (() => {
 								error: er
 							})
 						})
+
+			*/
+
+    }) //
     })
 
 
@@ -147,71 +193,37 @@ module.exports = (() => {
 		//console.log('save settings');
         //console.log(req.body.customer_id)
 
+	MongoClient.connect('mongodb://127.0.0.1:27017/sensorsMongoExample', function(err, db) {
+    if(err) throw err;
 
 		db.collection('sensordefaults').findAndModify({
 			query: { customer_id: req.body.customer_id },
 			update: req.body,
-			upsert: true
-		}).then(() => {
-                //console.log('inserted ok')
-                res.sendStatus(200)
-            })
-            .catch(er => {
-                res.sendStatus(500, {
-                    error: er
-                })
-            })
+			upsert: true,
+			new: true
+		},function(err,modDoc) {
+			res.json(modDoc);
+		})
 
-
-      /*
-        db.collection('sensordefaults').insert(req.body)
-            .then(() => {
-                console.log('inserted ok')
-                res.sendStatus(201)
-            })
-            .catch(er => {
-                res.sendStatus(500, {
-                    error: er
-                })
-            })
-	  */
+	  }) //
     })
 
 
 	app.get('/sensors/:sensor', function(req, res) {
 	// db.unicorns.find({_id: ObjectId("TheObjectId")})
 	// req.paramse.sensor
+	MongoClient.connect('mongodb://127.0.0.1:27017/sensorsMongoExample', function(err, db) {
+    if(err) throw err;
 
-    // find a document using a native ObjectId
-db.collection('sensors').findOne({
-	_id: pmongo.ObjectId(req.params.sensor)
-}).then(function(doc) {
-	// doc._id.toString() === '523209c4561c640000000001'
-	//console.log(doc);
-	res.json(doc);
-})
-.catch(er => {
-					res.sendStatus(500, {
-						error: er
-					})
-				})
-;
+			// find a document using a native ObjectId
+		db.collection('sensors').find({
+			_id: new ObjectID(req.params.sensor)
+		}).toArray(function(err, results) {
 
+			res.json(results);
+		})
 
-    /*
-	 db.collection('sensors').find({_id:new ObjectId("574fae623f0649da072dd481")})
-				.then(results => {
-				console.log("results");
-
-				console.log(results);
-					res.json(results)
-				})
-				.catch(er => {
-					res.sendStatus(500, {
-						error: er
-					})
-				})
-		*/
+   }) //
 
 	})
 
@@ -225,9 +237,43 @@ db.collection('sensors').findOne({
 
 
 	app.get('/users', (req, res) => {
+
+	MongoClient.connect('mongodb://127.0.0.1:27017/sensorsMongoExample', function(err, db) {
+
+//    console.log(db);
+    if(err)
+    {
+    res.sendStatus(500, {
+                    error: err
+                })
+    }
+    //throw err;
+
 		  //console.log(req);
 		  var email = req.query.email;
+			console.log(email);
 
+
+		//this is mongoclient syntax
+		 db.collection("users").find({'profile.email': email}).toArray(function(err, results) {
+
+		 res.json(results);
+		 })
+
+    /*
+    docs.each(function(err, doc) {
+      if(doc) {
+       // console.log(doc);
+        res.json(doc);
+      }
+      else {
+        res.end();
+      }
+    });
+    */
+
+
+		/*
 		  db.collection('users').find({
 		  'profile.email': email
 		  })
@@ -239,12 +285,20 @@ db.collection('sensors').findOne({
                     error: er
                 })
             })
+		*/
+            }) //
 
 		})
 
 
+/*
+//Deprecated
 
   app.post('/users', (req, res) => {
+
+  MongoClient.connect('mongodb://127.0.0.1:27017/sensorsMongoExample', function(err, db) {
+    if(err) throw err;
+
 		//console.log('save user');
         //console.log(req.body)
         db.collection('users').insert(req.body)
@@ -258,53 +312,60 @@ db.collection('sensors').findOne({
                 })
             })
 
+            }) //
+
     })
 
-
+*/
   app.post('/customercode', (req, res) => {
 		//console.log('get customer for secret code');
         //console.log(req.body)
-        db.collection('customers').find({
+
+        MongoClient.connect('mongodb://127.0.0.1:27017/sensorsMongoExample', function(err, db) {
+	    if(err) throw err;
+
+
+
+
+		db.collection('customers').find({
         	secretcode: req.body.params.secretcode
-        })
-            .then((results) => {
+        }).toArray(function(err, results) {
+  			// Do something...
 
-            	//console.log(results.length);
 
-            	if(results.length != 0) {
+
+
+		//console.log(results);
+
+
+
+
+  			if(results.length != 0) {
 
             	//we got a match on secretcode - add user to database
             		//console.log(results[0]._id);
 
-            		var customer_id=pmongo.ObjectId(results[0]._id);
+            		var customer_id=new ObjectID(results[0]._id);
             		var userData = {
             			customer_id: customer_id,
             			isAdmin: req.body.params.isAdmin,
             			profile: req.body.params.userData
 
             		};
+					//console.log(userData);
 
+            		 db.collection('users').insert(userData,function(err, userInserted) {
+					//console.log (userInserted);
+            		 var rspJson = {
+						userid : userInserted.insertedIds[0],
+						customerid : customer_id
+						};
 
-            		 db.collection('users').insert(userData)
-            .then((userInserted) => {
-                //console.log('inserted ok')
+						res.json(rspJson);
+						//res.sendStatus(201);
 
+            		 })
 
-                var rspJson = {
-                userid : userInserted._id,
-                customerid : customer_id
-                };
-
-            	res.json(rspJson);
-                res.sendStatus(201);
-
-
-            })
-            .catch(er => {
-                res.sendStatus(500, {
-                    error: er
-                })
-            })
 
 
 
@@ -316,65 +377,64 @@ db.collection('sensors').findOne({
     		res.json(rspJson);
 
     	}
-    }) //customer then
 
+
+		})
+
+
+	})
     }) //post
 
   app.post('/customers', (req, res) => {
-		console.log('save customer');
-        console.log(req.body)
+		//console.log('save customer');
+        //console.log(req.body)
+	MongoClient.connect('mongodb://127.0.0.1:27017/sensorsMongoExample', function(err, db) {
+    if(err) throw err;
 
-        /*
-       db.collection('customers').insert(req.body, function(err,docsInserted){
-			console.log(err);
-			res.sendStatus(201);
-		})*/
+
 
         var companyData = {
         customer : req.body.params.company,
         secretcode : req.body.params.secretcode
         }
 
-        db.collection('customers').insert(companyData)
-            .then((docsInserted) => {
-                console.log(docsInserted);
+        db.collection('customers').insert(companyData, function(err,docsInserted) {
+
+		console.log(docsInserted.insertedIds);
+
 
                 var userData = {
-                customer_id: docsInserted._id,
+                customer_id: docsInserted.insertedIds,
                 isAdmin: req.body.params.isAdmin,
                 profile: req.body.params.userData
                 }
 
+                console.log(userData);
 
-                db.collection('users').insert(userData)
-            .then((userInserted) => {
-                console.log('inserted ok')
-
-
-                var rspJson = {
-                userid : userInserted._id,
-                customerid : docsInserted._id
-                }
+                db.collection('users').insert(userData, function(err,userInserted) {
+					console.log('inserted ok')
 
 
-                res.json(rspJson);
-                res.sendStatus(201);
+					var rspJson = {
+					userid : userInserted.insertedIds[0],
+					customerid : docsInserted.insertedIds[0]
+					}
 
-                //res.sendStatus(201)
-            })
-            .catch(er => {
-                res.sendStatus(500, {
-                    error: er
+
+					res.json(rspJson);
+					//res.sendStatus(201);
+
                 })
-            }); //insert user
 
 
-            })
-            .catch(er => {
-                res.sendStatus(500, {
-                    error: er
-                })
-            })
+        })
+
+
+
+
+
+            }) //
+
     })
     app.get('/dashboard', dashboardHandler)
 

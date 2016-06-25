@@ -51,6 +51,7 @@
 		templateUrl: 'partials/login.html',
 		controller: 'loginCtrl'
 	  })
+
 	;
 
 
