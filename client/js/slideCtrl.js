@@ -1,9 +1,9 @@
 'use strict';
 
 nugNgApp.controller('slideCtrl', [
-'$scope','$http','sensorlist','sensor','store',
+'$scope','$http','sensorlist','sensor','store','asyncSensorSettings',
 
-function ($scope, $http, sensorlist,sensor,store) {
+function ($scope, $http, sensorlist,sensor,store,asyncSensorSettings) {
 $scope.growState = {
         state: 'grow'
       };
@@ -216,14 +216,36 @@ $scope.sensor = sensor;
     	//get company settings
 
     	console.log("get customer level settings" + $scope.nugProfile.customerid);
-    	var durl = "/sensordefaults";
-    	$http.get(
-		  durl, {
-		  params: { customer_id:$scope.nugProfile.customerid }
-			}
-		).then(function successCallback(response) {
+    	//else get default settings
+        //get the sensor settings asyncSensorSettings
 
 
+        asyncSensorSettings.getSettingsForCompany($scope.nugProfile.customerid).then(function(sensorSettings) {
+
+        setValuesFromSettings(sensorSettings);
+
+
+
+
+
+
+
+
+      });
+
+
+
+    }
+
+
+
+
+    function setValuesFromSettings(response) {
+
+
+
+
+        console.log("we're here");
 		console.log(response);
 
 
@@ -276,16 +298,8 @@ $scope.sensor = sensor;
 
 			// this callback will be called asynchronously
 			// when the response is available
-		  }, function errorCallback(response) {
-			// called asynchronously if an error occurs
-			// or server returns response with an error status.
-		  });
-
-    	//else get default settings
-
 
     }
-
 //knobs start here
 
 

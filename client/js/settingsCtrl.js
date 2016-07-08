@@ -10,11 +10,6 @@ nugNgApp.controller('settingsCtrl', ['$scope', '$http', '$cookies','sensorlist',
 
 	console.log("customerid:" + customerid);
 
- //$scope.sensorlist = sensorlist.sensors;
-
-
-  //$scope.sensorlist = sensorlist.getAll(customerid);
-
   asyncSensors.getSensorsForCompany(customerid).then(function(sensorData) {
   	$scope.sensorlist = sensorData;
 
@@ -27,6 +22,7 @@ nugNgApp.controller('settingsCtrl', ['$scope', '$http', '$cookies','sensorlist',
   sensorlist.create({
     sensorName: $scope.sensorName,
     strain: $scope.strain,
+    growState: $scope.growState,
     customerid: $scope.nugProfile.customerid
   });
   $scope.sensorName = '';
@@ -65,6 +61,48 @@ nugNgApp.controller('settingsCtrl', ['$scope', '$http', '$cookies','sensorlist',
 }])
 
 
+nugNgApp.factory('asyncSensorSettings', function($q, $http) {
+
+
+
+
+
+
+
+
+  var getSettingsForCompany = function(customerid) {
+    var deferred = $q.defer();
+
+
+  		var durl = "/sensordefaults";
+    	$http.get(
+		  durl, {
+		  params: { customer_id:customerid }
+			}
+		).then(function successCallback(response) {
+
+
+		    deferred.resolve(response);
+
+
+
+		}, function errorCallback(response) {
+
+			// called asynchronously if an error occurs
+			// or server returns response with an error status.
+		  });
+
+
+
+
+    return deferred.promise;
+  };
+	//console.log(getMessages);
+  return {
+    getSettingsForCompany: getSettingsForCompany
+  };
+
+});
 
 nugNgApp.factory('asyncSensors', function($q, $http) {
 
@@ -87,8 +125,8 @@ nugNgApp.factory('asyncSensors', function($q, $http) {
 		  params: { customerid: customerid}
 			}
   		  ).then(function(res){
-            console.log("asynch data back");
-    		console.log(res.data);
+            //console.log("asynch data back");
+    		//console.log(res.data);
 
 		  	//first we check whether this user exists in our records
 
@@ -120,13 +158,21 @@ o.get = function(id) {
   });
 };
 
+o.edit = function(sensor) {
+  return $http.post('/sensorupdate/' , sensor).then(function(res){
+
+    //console.log(res.data);
+    return res.data;
+  });
+};
+
 o.getAll = function(customerid) {
-	console.log("inside sensorlist");
-	console.log(customerid);
+	//console.log("inside sensorlist");
+	//console.log(customerid);
     return $http.get('/sensors').success(function(data){
       angular.copy(data, o.sensors);
       //console.log("posts data");
-      console.log(data);
+     // console.log(data);
     });
   };
 
@@ -142,7 +188,7 @@ o.getAll = function(customerid) {
 
 	o.create = function(sensor) {
 
-	console.log("sensor create");
+	//console.log("sensor create");
 	  return $http.post('/sensors', sensor).success(function(data){
 		o.sensors.push(data);
 	  });
@@ -151,7 +197,6 @@ o.getAll = function(customerid) {
 
 	o.addSettings = function(id, settings) {
 
-	console.log(settings);
   		return $http.post('/sensordefaults', settings).success(function(data){
 		console.log(data);
 	  });;

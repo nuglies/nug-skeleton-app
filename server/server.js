@@ -13,7 +13,7 @@ const moment = require('moment')
 const Q = require('q')
 const argv = require('minimist')(process.argv.slice(2));
 const path = require('path')
-
+const http = require('http');
 
 module.exports = (() => {
 
@@ -40,17 +40,72 @@ module.exports = (() => {
     });
 
     let dashboardHandler = (req, res, next) => {
+        /*
         let mockData = [
             'dashboard item one',
             'dashboard item two',
             'dashboard item three'
         ]
-        res.json(mockData)
+        */
+
+
+    /**
+     * HOW TO Make an HTTP Call - GET
+     */
+    // options for GET
+    var optionsget = {
+        host : 'cjparker.us', // here only the domain name
+        // (no http/https !)
+        //port : 80,
+        path : '/nug/api/rawData', // the rest of the url with parameters if needed
+        method : 'GET' // do GET
+    };
+
+
+    // do the GET request
+    var reqGet = http.request(optionsget, function(res2) {
+        console.info("statusCode: ", res.statusCode);
+        res.status = res2.statusCode;
+        //res.json("statusCode: ", res.statusCode)
+        // uncomment it for header details
+      //console.log("headers: ", res.headers);
+
+        var content="";
+        res2.on('data', function(d) {
+           // console.info('GET result:\n');
+            //process.stdout.write(d);
+           // console.info('\n\nCall completed');
+            //console.info("result:", d)
+            //var jd = encoding.convert(d, "UTF-8");
+            //console.info(d);
+            content += d;
+        });
+
+        res2.on('end', function () {
+                // remove 'undefined that appears before JSON for some reason
+                ////content = JSON.parse(content.substring(9, content.length));
+                res.setHeader('Content-Type', 'application/json');
+               // console.info(content);
+                res.json(content);
+        });
+
+    });
+
+    reqGet.end();
+    reqGet.on('error', function(e) {
+        console.error(e);
+    });
+
+
+        //res.json(mockData)
     }
 
     app.post('/sensors', (req, res) => {
 
         console.log(req.body)
+
+
+
         db.collection('sensors').insert(req.body)
             .then(() => {
                 console.log('inserted ok')
@@ -64,11 +119,35 @@ module.exports = (() => {
 
     })
 
+
+   app.post('/sensorupdate', (req, res) => {
+
+        console.log(req.body)
+
+        var sensorid = pmongo.ObjectId(req.body._id);
+        console.log(sensorid);
+        db.collection('sensors').findAndModify({
+			query: { "_id": sensorid },
+			update: req.body,
+			upsert: true
+		}).then((out) => {
+                //console.log(out)
+                res.sendStatus(200)
+            })
+            .catch(er => {
+                console.log(er);
+                res.sendStatus(500, {
+                    error: er
+                })
+            })
+
+    })
+
     app.get('/sensors', (req, res) => {
 
       var customerid = req.query.customerid;
       console.log(customerid);
-        db.collection('sensors').find({customerid: customerid})
+        db.collection('sensors').find({customerid: customerid}).sort({"growState":1})
             .then(results => {
                 res.json(results)
             })
@@ -78,6 +157,8 @@ module.exports = (() => {
                 })
             })
     })
+
+
 
 
 

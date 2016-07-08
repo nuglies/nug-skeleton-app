@@ -46,6 +46,18 @@
      		requiresLogin: true
    		}
       })
+      .state('sensor', {
+      url: '/sensor/{id}',
+      templateUrl: 'partials/sensor.html',
+      controller: 'sensorCtrl',
+      resolve: {
+		sensor: ['$stateParams', 'sensorlist', function($stateParams, sensorlist) {
+		  return sensorlist.get($stateParams.id);
+			}],
+
+
+		}
+    })
 	  .state('login', {
 		url: '/login',
 		templateUrl: 'partials/login.html',
