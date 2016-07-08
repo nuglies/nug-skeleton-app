@@ -1,0 +1,20 @@
+<!doctype html>
+<div class="settings">
+  <h3>edit sensor</h3>
+  <div class="settings-content">
+
+    <div>{{msg}}</div>
+		  	<span>
+                <a href="#/slider/{{sensor._id}}">configure settings</a>
+		  	</span>
+			{{sensor.sensorName}} - {{sensor.strain}} [{{sensor.growState}}]
+	  <form ng-submit="editSensor()">
+
+	  Sensor Name: <input type="text" ng-model="sensor.sensorName"></input><br/>
+	  Strain: <input type="text" ng-model="sensor.strain"></input><br/>
+	  Grow State: <input type="text" ng-model="sensor.growState"></input><br/>
+        <input type="hidden" ng-model="sensor.customerid"></input>
+	  <button type="submit">Sensor</button>
+	  </form>
+	</div>
+</div>
