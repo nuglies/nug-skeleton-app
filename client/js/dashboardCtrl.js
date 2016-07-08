@@ -273,6 +273,7 @@ function getSettings(sensorFeed) {
 		//make it globally available
 		$scope.settingsObj = settingsObj;
 
+
     var sensorObj =    JSON.parse(sensorFeed, function(k, v) {
       return v;        // return everything else unchanged
     });
