@@ -3,9 +3,15 @@ nugNgApp
         return {
             restrict: 'E',
             scope: {
-                chartdata: '=chartData'
+                chartdata: '=chartData',
+                stages: '=stages',
+                msg: "=hello"
+
             },
             templateUrl: '/partials/health-chart.html'
         };
+
+
+
 
     });

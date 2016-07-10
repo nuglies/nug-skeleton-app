@@ -160,7 +160,7 @@ function xyzTocieLab(x,y,z) {
     return CIE;
 }
 
-function getSensors(sensorObj) {
+function getSensors(sensorFeed) {
 
 //sensorObj = sensor feed
 
@@ -171,8 +171,32 @@ asyncSensors.getSensorsForCompany(customerid).then(function(sensorData) {
 
     //for demo purposes only, run through feedLooper for each Sensor in sensorlist
 
+
+    //console.log($scope.settingsObj);
+
+
     for(var i=0;i<sensorData.length;i++) {
-        feedLooper(sensorData[i],sensorObj);
+
+
+        var sensorGS = sensorData[i].growState.toLowerCase();
+
+
+
+
+        for(var x=0;x<$scope.settingsObj.length;x++) {
+
+            if($scope.settingsObj[x].growState.toLowerCase() == sensorGS) {
+
+            //console.log("sensorGS: " + sensorGS + " is key: " + x);
+            var gsKey = x;
+
+            }
+
+        }
+
+
+
+        feedLooper(sensorData[i],sensorFeed,gsKey);
     }
 
   	//return sensorData;
@@ -182,16 +206,174 @@ asyncSensors.getSensorsForCompany(customerid).then(function(sensorData) {
 }
 
 
-function feedLooper(sensorData,sensorObj) {
- var curDate = new Date();
-
-    //console.log(curDate);
 
 
+function lightCycle(settingsObj,sensorFeed) {
 
+
+
+    var dateOnly = sensorFeed.dateTime.split("T");
+    //console.log(sensorFeed);
+
+    var lightsOff = new Date(dateOnly[0] + " " +settingsObj.lightsOff.time);
+    var settingsHourOff = lightsOff.getHours();
+
+    var lightsOn = new Date(dateOnly[0] + " " +settingsObj.lightsOn.time);
+
+    var settingsHourOn = lightsOn.getHours();
+
+
+    var recDate =   new Date(sensorFeed.dateTime);
+    var recTime = recDate.getHours();
+
+    //if lightsOn time is later than lightsOff time than do we need to flip the logic????
+    if(settingsHourOn > settingsHourOff) {
+
+        var setForDark = true;
+
+    } else {
+        var setForDark = false;
+    }
+
+    var lightsOnRsp = 0;
+
+    if(recTime > settingsHourOn && recTime < settingsHourOff) {
+       // console.log(recTime);
+       // console.log("is between");
+       // console.log(" turn on: " + settingsHourOn + " and turn off: " + settingsHourOff )
+
+
+        if(setForDark == true) {
+
+           // console.log("should be dark");
+            lightsOnRsp = 0;
+        } else {
+
+            //console.log("should be light");
+            lightsOnRsp = 1;
+
+        }
+
+
+
+
+    } else if (recTime == settingsHourOn) {
+      //  console.log(recTime + " hour equals " + settingsHourOn + " on - compare minutes");
+
+        var settingsMinOn = lightsOn.getMinutes();
+        var settingsMinOff = lightsOff.getMinutes();
+        var recMin = recDate.getMinutes();
+       // console.log(settingsMinOn + " " + recMin + " " + settingsMinOff);
+        //lights should turn on this hour
+        //as long as the record minutes are greater than the setting minutes
+
+        if(recMin > settingsMinOn) {
+            lightsOnRsp = 1;
+        } else {
+            lightsOnRsp = 0;
+        }
+
+
+
+
+    } else if (recTime == settingsHourOff) {
+       // console.log(recTime+ " hour equals " + settingsHourOff + " off - compare minutes");
+
+        var settingsMinOn = lightsOn.getMinutes();
+        var settingsMinOff = lightsOff.getMinutes();
+        var recMin = recDate.getMinutes();
+
+       // console.log(settingsMinOn + " " + recMin + " " + settingsMinOff);
+        //lights should turn off this hour
+        //as long as the record minutes are greater than the settings minutes
+
+        if(recMin > settingsMinOn) {
+            lightsOnRsp = 0;
+        } else {
+            lightsOnRsp = 1;
+        }
+
+
+
+    } else {
+
+    /*
+        console.log(recTime);
+        console.log("not between");
+        console.log(" turn on: " + settingsHourOn+ " and turn off:" + settingsHourOff )
+    */
+
+        if(setForDark == true) {
+
+           // console.log("should be dark");
+            lightsOnRsp = 0;
+        } else {
+
+           // console.log("should be light");
+            lightsOnRsp = 1;
+
+        }
+    }
+    return lightsOnRsp;
+}
+
+
+function nugsLightComposite (sensorFeed) {
+    var RGB = sensorFeed.RGB;
+    var R = RGB.R;
+    var G = RGB.G;
+    var B = RGB.B;
+
+    var W = RGB.R + RGB.G + RGB.B;
+
+
+   // var par_R = parCalc(R);
+   // var H = oneColorHSV(R,G,B);
+
+    //console.log("white" + W);
+
+    if (W <= 100) {
+        recLight = 0;
+    } else if (W > 100 && W <= 400) {
+
+        //light levels are low - could be an error
+       var recLight = -1;
+
+
+    } else {
+        //lights are on
+       var recLight = 1;
+    }
+    //console.log("recLight: " + recLight);
+    return recLight;
+}
+
+
+function chartObject (metaData, lightErr, tempErr, humidityErr) {
+    this.metaData = metaData;
+    this.lightErr = lightErr;
+    this.tempErr = tempErr;
+    this.humidityErr = humidityErr;
+
+}
+
+function feedLooper(sensorData,sensorFeed,gsKey) {
+
+
+    //use gsKey (grow state of sensor to determine key for settings
+
+    var settingsObj = $scope.settingsObj[gsKey];
+
+   // console.log(settingsObj);
+
+
+
+
+
+    var curDate = new Date();
     //for the first result get the dateTime for last update status
 
-    var feed2Date =   new Date(sensorObj[0].dateTime);
+    var feed2Date =   new Date(sensorFeed[0].dateTime);
     //console.log(feed2Date);
     var dateDiff = curDate - feed2Date;
     // threshold in hours
@@ -208,19 +390,65 @@ function feedLooper(sensorData,sensorObj) {
     $scope.timeAgo = timeAgo;
 
     }
-    console.log(sensorData.growState);
 
+    var chartArr = {};
+    chartArr[sensorData.growState] = [];
     for(var i=0;i<10;i++) {
     //loop through sensorFeed
-   // console.log(sensorObj[i]);
-    var tempF = sensorObj[i].tempF;
-    var humidity = sensorObj[i].humidity;
-    var RGB = sensorObj[i].RGB;
-    var R = RGB.R;
-    var G = RGB.G;
-    var B = RGB.B;
-   // var par_R = parCalc(R);
-   // var H = HSVCalc(R,G,B);
+
+    var recLight = nugsLightComposite(sensorFeed[i]);
+    //console.log(recLight);
+
+
+
+    var lightsOn = lightCycle(settingsObj.settings[0],sensorFeed[i]);
+
+    if(lightsOn == 1) {
+        var workingSettings =  settingsObj.settings[0].lightsOn;
+    } else {
+        var workingSettings = settingsObj.settings[0].lightsOff;
+    }
+
+    if(lightsOn == recLight) {
+        var lightErr = 0;
+    } else {
+        var lightErr = 1;
+    }
+
+
+    //console.log(workingSettings);
+
+
+    var tempF = sensorFeed[i].tempF;
+
+
+    if(tempF > workingSettings.heat[0].min && tempF < workingSettings.heat[0].max) {
+
+        var tempErr = 0;
+    } else {
+        var tempErr = 1;
+
+    }
+
+
+    var humidity = sensorFeed[i].humidity;
+
+    if(humidity > workingSettings.humidity[0].min && humidity < workingSettings.humidity[0].max) {
+
+        var humidityErr = 0;
+    } else {
+        var humidityErr = 1;
+    }
+
+
+    //chartArr[sensorData.growState][i]['humidity'] = humidityErr;
+
+    //we can make metaData a string and pass it to object to use as alt text
+
+    chartArr[sensorData.growState][i] = new chartObject(sensorData.sensorName, lightErr, tempErr, humidityErr);
+    //console.log(chartData);
+
+   /*
     var colorxyz = oneColorXYZ(R,G,B);
     //console.log(colorxyz);
     var colorlab = oneColorLab(R,G,B);
@@ -234,30 +462,18 @@ function feedLooper(sensorData,sensorObj) {
     //console.log("colorluv");
     //console.log(colorluv);
 
-
-    var sensorGS = sensorData.growState.toLowerCase();
-    //var gsKey = $scope.settingsObj.indexOf(sensorGS);
+    */
 
 
-    console.log($scope.settingsObj);
 
-    for(var x=0;x<$scope.settingsObj.length;x++) {
 
-        if($scope.settingsObj[x].growState.toLowerCase() == sensorGS) {
-
-        console.log("sensorGS: " + sensorGS + " is key: " + x);
-
-        }
 
     }
 
-
-/*
-
-*/
-
-
-    }
+    //console.log(chartArr);
+    $scope.stages = ['Grow', 'Flower', 'Clone'];
+    $scope.chartData = chartArr;
+    $scope.hello = "hello";
 
 }
 
@@ -268,20 +484,20 @@ function getSettings(sensorFeed) {
         //console.log(sensorFeed);
     	$scope.lightObj =  sensorSettings.data.par[0];
 		var settingsObj =  sensorSettings.data.growStates;
-		console.log(settingsObj);
+		//console.log(settingsObj);
 
 		//make it globally available
 		$scope.settingsObj = settingsObj;
 
 
-    var sensorObj =    JSON.parse(sensorFeed, function(k, v) {
+    var sensorFP =    JSON.parse(sensorFeed, function(k, v) {
       return v;        // return everything else unchanged
     });
 
 
     //for demo purposes only, run through feedLooper for each Sensor in sensorlist
 
-    getSensors(sensorObj);
+    getSensors(sensorFP);
 
 
     //console.log(sensorObj);
