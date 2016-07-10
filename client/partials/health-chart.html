@@ -1,71 +1,36 @@
 <!doctype html>
-{{msg}}
+
+
 <div class='health-widget'>
   <div class='heading'>Health</div>
   <div class='graph'>
 
     <div ng-repeat="stage in stages" class='graph-stage'>
-      <div class='stage-label'>Clone</div>
+      <div class='stage-label'>{{stage}}</div>
       <div class='stage-rows'>
-        <div class='graph-row'>
-          <div class='row-label'>Temp</div>
-          <div class='row-boxes'>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-          </div>
+        <div ng-repeat="metric in metrics" class='graph-row'>
+          <div class='row-label'>{{metric}}</div>
+          <!-- <div ng-repeat="n in [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,0,0,0] track by $index" class='row-boxes'>-->
+            <div class='row-boxes'>
+                <div class='box'></div>
+                <div class='box'></div>
+                <div class='box'></div>
+                <div class='box'></div>
+                <div class='box error'></div>
+                <div class='box'></div>
+                <div class='box'></div>
+                <div class='box'></div>
+                <div class='box'></div>
+                <div class='box'></div>
+                <div class='box'></div>
+                <div class='box'></div>
+                <div class='box'></div>
+                <div class='box'></div>
+
+
+          </div><!--row-->
         </div>
 
-        <div class='graph-row'>
-          <div class='row-label'>Humidity</div>
-          <div class='row-boxes'>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box error'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-          </div>
-        </div>
-
-        <div class='graph-row'>
-          <div class='row-label'>Light</div>
-          <div class='row-boxes'>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-          </div>
-        </div>
       </div>
     </div>
 

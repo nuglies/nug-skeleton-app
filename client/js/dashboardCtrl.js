@@ -174,7 +174,7 @@ asyncSensors.getSensorsForCompany(customerid).then(function(sensorData) {
 
     //console.log($scope.settingsObj);
 
-
+    var chartArr = {};
     for(var i=0;i<sensorData.length;i++) {
 
 
@@ -196,13 +196,24 @@ asyncSensors.getSensorsForCompany(customerid).then(function(sensorData) {
 
 
 
-        feedLooper(sensorData[i],sensorFeed,gsKey);
+        chartArr[sensorGS] = feedLooper(sensorData[i],sensorFeed,gsKey);
     }
 
+   // console.log(chartArr);
+
+    $scope.chartData = chartArr;
+
+    $scope.stages = Object.keys(chartArr);
+
+    $scope.metrics = Object.keys(chartArr['clone']);
+
+    console.log(chartArr.clone.temp);
   	//return sensorData;
 
 
     });
+
+
 }
 
 
@@ -392,7 +403,10 @@ function feedLooper(sensorData,sensorFeed,gsKey) {
     }
 
     var chartArr = {};
-    chartArr[sensorData.growState] = [];
+    var humidityArr = [];
+    var tempArr = [];
+    var lightArr = [];
+    //chartArr[sensorData.growState] = [];
     for(var i=0;i<10;i++) {
     //loop through sensorFeed
 
@@ -415,7 +429,7 @@ function feedLooper(sensorData,sensorFeed,gsKey) {
         var lightErr = 1;
     }
 
-
+    lightArr[i] = lightErr;
     //console.log(workingSettings);
 
 
@@ -430,6 +444,7 @@ function feedLooper(sensorData,sensorFeed,gsKey) {
 
     }
 
+    tempArr[i] = tempErr;
 
     var humidity = sensorFeed[i].humidity;
 
@@ -440,12 +455,14 @@ function feedLooper(sensorData,sensorFeed,gsKey) {
         var humidityErr = 1;
     }
 
+    humidityArr[i] = humidityErr;
 
     //chartArr[sensorData.growState][i]['humidity'] = humidityErr;
 
     //we can make metaData a string and pass it to object to use as alt text
 
-    chartArr[sensorData.growState][i] = new chartObject(sensorData.sensorName, lightErr, tempErr, humidityErr);
+
+    //chartArr[i] = new chartObject(sensorData.sensorName, lightErr, tempErr, humidityErr);
     //console.log(chartData);
 
    /*
@@ -468,12 +485,19 @@ function feedLooper(sensorData,sensorFeed,gsKey) {
 
 
 
-    }
+    } //loop
+
+
+    chartArr['temp'] = tempArr;
+    chartArr['humidity'] = humidityArr;
+    chartArr['light'] = lightArr;
+
 
     //console.log(chartArr);
-    $scope.stages = ['Grow', 'Flower', 'Clone'];
-    $scope.chartData = chartArr;
-    $scope.hello = "hello";
+    //var stages = Object.keys(chartArr);
+    //console.log(stages);
+
+    return chartArr;
 
 }
 
