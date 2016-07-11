@@ -96,7 +96,7 @@ module.exports = (() => {
     }
 
     app.post('/sensors', (req, res) => {
-        MongoClient.connect('mongodb://127.0.0.1:27017/sensorsMongoExample', function(err, db) {
+        MongoClient.connect(mongoDBURI, function(err, db) {
                 if (err) throw err;
 
                 //console.log(req.body)
@@ -115,7 +115,7 @@ module.exports = (() => {
 
     app.get('/sensors', (req, res) => {
 
-        MongoClient.connect('mongodb://127.0.0.1:27017/sensorsMongoExample', function(err, db) {
+        MongoClient.connect(mongoDBURI, function(err, db) {
                 if (err) throw err;
 
                 var customerid = req.query.customerid;
@@ -138,7 +138,7 @@ module.exports = (() => {
         console.log(sensorid);
 
 
-        MongoClient.connect('mongodb://127.0.0.1:27017/sensorsMongoExample', function(err, db) {
+        MongoClient.connect(mongoDBURI, function(err, db) {
                 if (err) throw err;
 
                 db.collection('sensors').findAndModify({
@@ -172,7 +172,7 @@ module.exports = (() => {
 
     app.get('/sensordefaults', (req, res) => {
 
-        MongoClient.connect('mongodb://127.0.0.1:27017/sensorsMongoExample', function(err, db) {
+        MongoClient.connect(mongoDBURI, function(err, db) {
                 if (err) throw err;
 
                 var customer_id = req.query.customer_id;
@@ -278,7 +278,7 @@ module.exports = (() => {
         //console.log('save settings');
         //console.log(req.body.customer_id)
 
-        MongoClient.connect('mongodb://127.0.0.1:27017/sensorsMongoExample', function(err, db) {
+        MongoClient.connect(mongoDBURI, function(err, db) {
                 if (err) throw err;
 
                 db.collection('sensordefaults').findAndModify({
@@ -299,7 +299,7 @@ module.exports = (() => {
     app.get('/sensors/:sensor', function(req, res) {
         // db.unicorns.find({_id: ObjectId("TheObjectId")})
         // req.paramse.sensor
-        MongoClient.connect('mongodb://127.0.0.1:27017/sensorsMongoExample', function(err, db) {
+        MongoClient.connect(mongoDBURI, function(err, db) {
                 if (err) throw err;
 
                 // find a document using a native ObjectId
@@ -327,7 +327,7 @@ module.exports = (() => {
 
     app.get('/users', (req, res) => {
 
-        MongoClient.connect('mongodb://127.0.0.1:27017/sensorsMongoExample', function(err, db) {
+        MongoClient.connect(mongoDBURI, function(err, db) {
 
                 //    console.log(db);
                 if (err) {
@@ -411,7 +411,7 @@ module.exports = (() => {
             //console.log('get customer for secret code');
             //console.log(req.body)
 
-            MongoClient.connect('mongodb://127.0.0.1:27017/sensorsMongoExample', function(err, db) {
+            MongoClient.connect(mongoDBURI, function(err, db) {
                 if (err) throw err;
 
 
@@ -481,7 +481,7 @@ module.exports = (() => {
     app.post('/customers', (req, res) => {
         //console.log('save customer');
         //console.log(req.body)
-        MongoClient.connect('mongodb://127.0.0.1:27017/sensorsMongoExample', function(err, db) {
+        MongoClient.connect(mongoDBURI, function(err, db) {
                 if (err) throw err;
 
 
