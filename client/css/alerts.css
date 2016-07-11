@@ -1,0 +1,30 @@
+.alerts-widget {
+  flex: 0 0 30%; }
+  .alerts-widget .heading {
+    font-size: 2em;
+    border-bottom: 5px solid darkgray;
+    margin-bottom: 3px; }
+  .alerts-widget .item {
+    display: flex;
+    flex-direction: row; }
+    .alerts-widget .item:hover {
+      background-color: darkgray; }
+    .alerts-widget .item .icon-prefix {
+      flex: 0 0 2%;
+      margin: auto; }
+    .alerts-widget .item .item-icon {
+      flex: 0 0 5%;
+      margin: auto;
+      text-align: center; }
+      .alerts-widget .item .item-icon .nugicon {
+        font-size: 1.7em; }
+    .alerts-widget .item .item-text {
+      flex: 0 0 93%;
+      padding-left: 0.4em;
+      margin: auto; }
+      .alerts-widget .item .item-text .subtext {
+        font-size: 0.6em;
+        text-decoration: italics;
+        font-style: italic; }
+    .alerts-widget .item .item-controls {
+      flex: 0 0 5%; }
