@@ -199,15 +199,77 @@ asyncSensors.getSensorsForCompany(customerid).then(function(sensorData) {
         chartArr[sensorGS] = feedLooper(sensorData[i],sensorFeed,gsKey);
     }
 
-   // console.log(chartArr);
+    console.log(chartArr);
 
     $scope.chartData = chartArr;
 
-    $scope.stages = Object.keys(chartArr);
+    //$scope.stages = Object.keys(chartArr);
+    $scope.stages = {};
 
-    $scope.metrics = Object.keys(chartArr['clone']);
+//    $scope.metrics = Object.keys(chartArr['clone']);
 
-    console.log(chartArr.clone.temp);
+    //$scope.boxes = chartArr['clone']['temp'];
+
+    var rebuildArr = {};
+    for (var key in chartArr) {
+
+
+
+       // $scope.stages.metrics = Object.keys(chartArr[key]);
+
+
+        var metric = chartArr[key];
+        //console.log("metric");
+        //console.log(metric);
+
+       // $scope.stages[metric] = metric;
+        for (var k in metric) {
+
+
+
+        //console.log("key");
+        //console.log(key);
+        //console.log("metric k");
+        //console.log(metric[k]);
+        //var mmmmm = metric[k];
+        //console.log(mmmmm);
+         $scope.stages[key]=metric;
+       // $scope.stages[metric][k] = key;
+        for (var unit in metric[k]) {
+
+
+           // console.log("metric k unit");
+         // $scope.stages['growState'][k]=metric[k][unit];
+         // $scope.stages.metric.k[key] = metric[k];
+
+          // $scope.stages.metrics[metric][k] = metric[k][unit];
+           //$scope.stages.metrics[k] = metric[k][unit];
+
+        }
+
+
+
+
+
+
+
+
+//        rebuildArr["a"][k] = metric[k];
+        }
+
+
+
+       // console.log(chartArr[key]['temp']);
+
+
+
+
+
+    }
+
+
+
+    console.log($scope.stages);
   	//return sensorData;
 
 
@@ -407,7 +469,7 @@ function feedLooper(sensorData,sensorFeed,gsKey) {
     var tempArr = [];
     var lightArr = [];
     //chartArr[sensorData.growState] = [];
-    for(var i=0;i<10;i++) {
+    for(var i=0;i<14;i++) {
     //loop through sensorFeed
 
     var recLight = nugsLightComposite(sensorFeed[i]);

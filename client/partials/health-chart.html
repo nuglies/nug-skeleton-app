@@ -8,24 +8,14 @@
     <div ng-repeat="stage in stages" class='graph-stage'>
       <div class='stage-label'>{{stage}}</div>
       <div class='stage-rows'>
-        <div ng-repeat="metric in metrics" class='graph-row'>
+        <div ng-repeat="metric in stage" class='graph-row'>
           <div class='row-label'>{{metric}}</div>
           <!-- <div ng-repeat="n in [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,0,0,0] track by $index" class='row-boxes'>-->
             <div class='row-boxes'>
-                <div class='box'></div>
-                <div class='box'></div>
-                <div class='box'></div>
-                <div class='box'></div>
-                <div class='box error'></div>
-                <div class='box'></div>
-                <div class='box'></div>
-                <div class='box'></div>
-                <div class='box'></div>
-                <div class='box'></div>
-                <div class='box'></div>
-                <div class='box'></div>
-                <div class='box'></div>
-                <div class='box'></div>
+                <div ng-repeat="unit in metric track by $index" class='box'>
+                {{n}}
+                </div>
+
 
 
           </div><!--row-->
