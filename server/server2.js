@@ -21,6 +21,11 @@ module.exports = (() => {
 
     let port = process.env.PORT || 5000
 
+    let defaultMongoDBURI = 'mongodb://localhost/sensorsMongoExample'
+    let mongoDBURI = process.env.MONGODB_URI || defaultMongoDBURI
+
+    console.log('using DB URI', mongoDBURI)
+
     let app = express()
     app.use(express.static(path.join(__dirname, '../client')));
     app.use(bodyParser.json())
