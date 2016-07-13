@@ -69,6 +69,7 @@ nugNgApp.controller( 'loginCtrl',['$scope', '$http','auth','$location', 'store',
 	  	$location.path('/register');
       } else {
       	//user data is sufficient, redirect to dashboard
+      	  store.set('nugProfile', userData);
 		  $location.path('/dashboard');
       }
 

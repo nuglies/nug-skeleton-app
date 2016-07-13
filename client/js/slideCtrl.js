@@ -23,7 +23,7 @@ $scope.saveSettings = function(){
 	//console.log($scope.settingsObj);
 
 	var dataJson = {
-		 "customer_id" : $scope.nugProfile.customerid,
+		 "customer_id" : $scope.nugProfile[0].customer_id,
 		"par" : [
 			$scope.lightObj
 		],
@@ -44,6 +44,8 @@ $scope.beginWatchers = function() {
 	//we turn on our watcher after we have our results
 	//todo: promise may be a better way to do this
 
+
+        console.log("break");
 		var gsKey = $scope.gsArr.indexOf($scope.growState.state);
 		$scope.$watch('knobsCtrlMaxOffVal', function(newVal) {
 
@@ -116,7 +118,7 @@ $scope.setGrowStates= function(){
 	var lightsOffArr = theSettings.lightsOff.time.split(":");
 
 
-	console.log(lightsOffArr);
+	//console.log(lightsOffArr);
 
 	$scope.timepicker.clock.time.fromHour = lightsOnArr[0];
 	$scope.timepicker.clock.time.fromMinute = lightsOnArr[1];
@@ -156,6 +158,7 @@ $scope.setGrowStates= function(){
 	 $scope.knobsCtrlMinOffVal = theSettings.lightsOff.heat[0].min;
 
 	 //humidity settings
+
 	 $scope.knobsCtrlMaxHumOnVal = theSettings.lightsOn.humidity[0].max;
 	 $scope.knobsCtrlMaxHumOffVal = theSettings.lightsOff.humidity[0].max;
 	 $scope.knobsCtrlMinHumOnVal = theSettings.lightsOn.humidity[0].min;
@@ -215,13 +218,15 @@ $scope.sensor = sensor;
     	console.log("no settings for this sensor yet");
     	//get company settings
 
-    	console.log("get customer level settings" + $scope.nugProfile.customerid);
+    	console.log("get customer level settings" + $scope.nugProfile[0].customer_id);
     	//else get default settings
         //get the sensor settings asyncSensorSettings
 
 
-        asyncSensorSettings.getSettingsForCompany($scope.nugProfile.customerid).then(function(sensorSettings) {
+        asyncSensorSettings.getSettingsForCompany($scope.nugProfile[0].customer_id).then(function(sensorSettings) {
 
+        console.log("and the sensorsettings response");
+        console.log(sensorSettings);
         setValuesFromSettings(sensorSettings);
 
 
