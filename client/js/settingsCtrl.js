@@ -4,7 +4,7 @@ nugNgApp.controller('settingsCtrl', ['$scope', '$http', '$cookies','sensorlist',
 
 	$scope.nugProfile = store.get('nugProfile');
 	console.log($scope.nugProfile);
-	var customerid = $scope.nugProfile.customerid;
+	var customerid = $scope.nugProfile[0].customer_id;
 	var userid = $scope.nugProfile.userid;
 
 
@@ -23,11 +23,11 @@ nugNgApp.controller('settingsCtrl', ['$scope', '$http', '$cookies','sensorlist',
     sensorName: $scope.sensorName,
     strain: $scope.strain,
     growState: $scope.growState,
-    customerid: $scope.nugProfile.customerid
+    customerid: $scope.nugProfile[0].customer_id
   });
   $scope.sensorName = '';
   $scope.strain = '';
- //$scope.sensorlist = asyncSensors.getSensorsForCompany($scope.nugProfile.customerid);
+ //$scope.sensorlist = asyncSensors.getSensorsForCompany($scope.nugProfile[0].customer_id);
 
 
 
@@ -36,7 +36,7 @@ nugNgApp.controller('settingsCtrl', ['$scope', '$http', '$cookies','sensorlist',
 
 
 
-  asyncSensors.getSensorsForCompany($scope.nugProfile.customerid).then(function(sensorData) {
+  asyncSensors.getSensorsForCompany($scope.nugProfile[0].customer_id).then(function(sensorData) {
 
     $scope.sensorlist = sensorData;
 
@@ -67,10 +67,12 @@ nugNgApp.factory('asyncSensorSettings', function($q, $http) {
 
 
 
+console.log("asyncSensorSettings");
 
 
 
   var getSettingsForCompany = function(customerid) {
+  console.log(customerid);
     var deferred = $q.defer();
 
 
@@ -80,8 +82,8 @@ nugNgApp.factory('asyncSensorSettings', function($q, $http) {
 		  params: { customer_id:customerid }
 			}
 		).then(function successCallback(response) {
-
-
+            console.log("success response");
+            console.log(response);
 		    deferred.resolve(response);
 
 

@@ -13,7 +13,7 @@ nugNgApp.controller('dashboardCtrl', ['$scope', '$http','asyncSensorSettings','a
     $scope.timeAgo = "";
   	$scope.nugProfile = store.get('nugProfile');
 	console.log($scope.nugProfile);
-	var customerid = $scope.nugProfile.customerid;
+	var customerid = $scope.nugProfile[0].customer_id;
 	var userid = $scope.nugProfile.userid;
 
 function formatTimeAgo(dateDiff) {
@@ -500,7 +500,9 @@ function getSettings(sensorFeed) {
 // called after sensorFeed returned
   asyncSensorSettings.getSettingsForCompany(customerid).then(function(sensorSettings) {
   	    $scope.sensorsettings = sensorSettings;
-        //console.log(sensorFeed);
+
+        console.log("sensorSettings");
+        console.log(sensorSettings);
     	$scope.lightObj =  sensorSettings.data.par[0];
 		var settingsObj =  sensorSettings.data.growStates;
 		//console.log(settingsObj);
