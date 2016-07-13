@@ -1,269 +1,29 @@
 <!doctype html>
+
+
 <div class='health-widget'>
   <div class='heading'>Health</div>
   <div class='graph'>
 
-    <div class='graph-stage'>
-      <div class='stage-label'>Clone</div>
+    <div ng-repeat="(key, stage) in chartData" class='graph-stage'>
+      <div class='stage-label'>{{key}}</div>
       <div class='stage-rows'>
-        <div class='graph-row'>
-          <div class='row-label'>Temp</div>
-          <div class='row-boxes'>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-          </div>
+        <div ng-repeat="(k, metric) in stage" class='graph-row'>
+          <div class='row-label'>{{k}}</div>
+          <!-- <div ng-repeat="n in [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,0,0,0] track by $index" class='row-boxes'>-->
+            <div class='row-boxes'>
+                <div ng-repeat="unit in metric track by $index" class='box' ng-class="{'error': unit == '1' }">
+
+                </div>
+
+
+
+          </div><!--row-->
         </div>
 
-        <div class='graph-row'>
-          <div class='row-label'>Humidity</div>
-          <div class='row-boxes'>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box error'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-          </div>
-        </div>
-
-        <div class='graph-row'>
-          <div class='row-label'>PAR</div>
-          <div class='row-boxes'>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-          </div>
-        </div>
       </div>
     </div>
 
-    <div class='graph-stage'>
-      <div class='stage-label'>Grow</div>
-      <div class='stage-rows'>
-        <div class='graph-row'>
-          <div class='row-label'>Temp</div>
-
-          <div class='row-boxes'>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-          </div>
-        </div>
-
-        <div class='graph-row'>
-          <div class='row-label'>Humidity</div>
-          <div class='row-boxes'>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-          </div>
-        </div>
-
-        <div class='graph-row'>
-          <div class='row-label'>PAR</div>
-          <div class='row-boxes'>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class='graph-stage'>
-      <div class='stage-label'>Flower</div>
-      <div class='stage-rows'>
-        <div class='graph-row'>
-          <div class='row-label'>Temp</div>
-
-          <div class='row-boxes'>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-          </div>
-        </div>
-
-        <div class='graph-row'>
-          <div class='row-label'>Humidity</div>
-          <div class='row-boxes'>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-          </div>
-        </div>
-
-        <div class='graph-row'>
-          <div class='row-label'>PAR</div>
-          <div class='row-boxes'>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class='graph-stage'>
-      <div class='stage-label'>Cure</div>
-      <div class='stage-rows'>
-        <div class='graph-row'>
-          <div class='row-label'>Temp</div>
-
-          <div class='row-boxes'>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-          </div>
-        </div>
-
-        <div class='graph-row'>
-          <div class='row-label'>Humidity</div>
-          <div class='row-boxes'>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-          </div>
-        </div>
-
-        <div class='graph-row'>
-          <div class='row-label'>PAR</div>
-          <div class='row-boxes'>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-            <div class='box'></div>
-          </div>
-        </div>
-      </div>
-    </div>
 
   </div>
 </div>

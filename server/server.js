@@ -13,11 +13,14 @@ const moment = require('moment')
 const Q = require('q')
 const argv = require('minimist')(process.argv.slice(2));
 const path = require('path')
-
+const http = require('http');
 
 module.exports = (() => {
 
     let port = process.env.PORT || 5000
+
+    let defaultMongoDBURI = 'mongodb://localhost/sensorsMongoExample'
+    let mongoDBURI = process.env.MONGODB_URI || defaultMongoDBURI
 
     let app = express()
     app.use(express.static(path.join(__dirname, '../client')));
@@ -32,7 +35,7 @@ module.exports = (() => {
         extended: true
     }));
 
-    let db = pmongo('mongodb://localhost/sensorsMongoExample')
+    let db = pmongo(mongoDBURI)
 
     let authFilter = (req, res, next) => {
         console.log('authFilter, cookies', req.cookies)
@@ -66,7 +69,6 @@ module.exports = (() => {
                 next();
             }
         }
-
     }
 
     app.use(authFilter)
@@ -82,54 +84,14 @@ module.exports = (() => {
         next();
     });
 
-    let dashboardHandler = (req, res, next) => {
-        let mockData = [
-            'dashboard item one',
-            'dashboard item two',
-            'dashboard item three'
-        ]
-        res.json(mockData)
-    }
-
-    app.post('/sensors', (req, res) => {
-
-        console.log(req.body)
-        db.collection('sensors').insert(req.body)
-            .then(() => {
-                console.log('inserted ok')
-                res.sendStatus(201)
-            })
-            .catch(er => {
-                res.sendStatus(500, {
-                    error: er
-                })
-            })
-
-    })
-
     app.get('/checkLoggedIn', (req, res, next) => {
-      // the filter does the work
-      res.send(200);
+        // the filter does the work
+        res.send(200);
     })
-
-    app.get('/sensors', (req, res) => {
-        db.collection('sensors').find()
-            .then(results => {
-                res.json(results)
-            })
-            .catch(er => {
-                res.sendStatus(500, {
-                    error: er
-                })
-            })
-    })
-
-    app.get('/dashboard', dashboardHandler)
 
     app.listen(port, () => {
         console.log(`listening on ${port}`)
     })
-
 
 
 })()

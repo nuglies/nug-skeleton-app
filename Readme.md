@@ -27,3 +27,10 @@ grunt serve
 ```
 
 Point your browser at **http://localhost:3000**
+
+## To deploy to Heroku
+To deploy a feature branch to heroku (for example feature/customersettings)
+```
+git push heroku feature/customersettings:master
+```
+This says, 'take our feature/customersettings branch and deploy it to the heroku master branch'.  Because heroku only likes to deploy the master branch
