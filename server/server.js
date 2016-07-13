@@ -21,12 +21,55 @@ module.exports = (() => {
 
     let app = express()
     app.use(express.static(path.join(__dirname, '../client')));
+
+    app.use(session({
+        secret: 'uuddd77788998sdfsdfh----',
+        saveUninitialized: true,
+        resave: false
+    }));
     app.use(bodyParser.json())
     app.use(bodyParser.urlencoded({
         extended: true
     }));
 
     let db = pmongo('mongodb://localhost/sensorsMongoExample')
+
+    let authFilter = (req, res, next) => {
+        console.log('authFilter, cookies', req.cookies)
+        console.log('req path', req.path);
+
+        var allowedURLs = [
+            '/login'
+        ];
+
+        var allowedPatterns = [
+            '^.*?\.css',
+            '^.*?\.js',
+            '^.*?\.html',
+            '^.*?\.png'
+        ];
+
+
+        var allowedByPattern = function() {
+            return _.find(allowedPatterns, function(p) {
+                return req.path.match(new RegExp(p)) !== null;
+            });
+        };
+
+        if (_.contains(allowedURLs, req.path) || allowedByPattern()) {
+            next();
+        } else {
+
+            if (req.session.isLoggedIn !== true) {
+                res.sendStatus(401);
+            } else {
+                next();
+            }
+        }
+
+    }
+
+    app.use(authFilter)
 
     // Additional middleware which will set headers that we need on each request.
     app.use(function(req, res, next) {
@@ -62,6 +105,11 @@ module.exports = (() => {
                 })
             })
 
+    })
+
+    app.get('/checkLoggedIn', (req, res, next) => {
+      // the filter does the work
+      res.send(200);
     })
 
     app.get('/sensors', (req, res) => {

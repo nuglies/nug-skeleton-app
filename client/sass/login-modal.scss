@@ -1,0 +1,18 @@
+.login-modal {
+  position:absolute;
+  border:1px solid red;
+  width:80%;
+  height:80%;
+  text-align: center;
+  background: pink;
+  top:10%;
+  left:10%;
+}
+
+.loginButton {
+  cursor:pointer;
+  border:2px solid blue;
+  padding:20px;
+  margin:20px;
+  background:lightgreen;
+}
