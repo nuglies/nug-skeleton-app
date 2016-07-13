@@ -500,7 +500,9 @@ function getSettings(sensorFeed) {
 // called after sensorFeed returned
   asyncSensorSettings.getSettingsForCompany(customerid).then(function(sensorSettings) {
   	    $scope.sensorsettings = sensorSettings;
-        //console.log(sensorFeed);
+
+        console.log("sensorSettings");
+        console.log(sensorSettings);
     	$scope.lightObj =  sensorSettings.data.par[0];
 		var settingsObj =  sensorSettings.data.growStates;
 		//console.log(settingsObj);
