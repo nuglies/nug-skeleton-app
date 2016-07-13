@@ -19,6 +19,9 @@ module.exports = (() => {
 
     let port = process.env.PORT || 5000
 
+    let defaultMongoDBURI = 'mongodb://localhost/sensorsMongoExample'
+    let mongoDBURI = process.env.MONGODB_URI || defaultMongoDBURI
+
     let app = express()
     app.use(express.static(path.join(__dirname, '../client')));
     app.use(bodyParser.json())
@@ -26,7 +29,7 @@ module.exports = (() => {
         extended: true
     }));
 
-    let db = pmongo('mongodb://localhost/sensorsMongoExample')
+    let db = pmongo(mongoDBURI)
 
     // Additional middleware which will set headers that we need on each request.
     app.use(function(req, res, next) {
