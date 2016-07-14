@@ -95,3 +95,9 @@ a {
   .main-content .bottom {
     flex: 0 0 10%;
     background-color: #e6e6e6; }
+
+.welcome {
+  padding: 1.0em;
+  color: black; }
+  .welcome .profile-pic {
+    border: 3px solid gray; }
