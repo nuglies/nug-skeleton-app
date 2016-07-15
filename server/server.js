@@ -147,7 +147,7 @@ module.exports = (() => {
                 .then(() => {
                     console.log('updated / inserted user')
                 })
-                catch(err => {
+                .catch(err => {
                     console.log('error inserting user',err)
                 })
 
