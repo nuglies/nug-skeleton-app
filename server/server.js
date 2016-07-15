@@ -8,7 +8,8 @@ const _ = require('underscore')
 const fs = require('fs')
 const bodyParser = require('body-parser')
 const session = require('express-session')
-const pmongo = require('promised-mongo')
+const bluebird = require('bluebird')
+const mongodb = require('mongodb')
 const moment = require('moment')
 const Q = require('q')
 const argv = require('minimist')(process.argv.slice(2))
@@ -19,6 +20,9 @@ const cookieParser = require('cookie-parser');
 const MongoStore = require('connect-mongo')(session)
 
 module.exports = (() => {
+
+    let db
+    let mongoClient = bluebird.promisifyAll(mongodb).MongoClient;
 
     const rememberMeCookieName = 'nugliRememberMe'
 
@@ -33,8 +37,8 @@ module.exports = (() => {
 
     app.use(session({
         secret: 'uuddd77788998sdfsdfh----',
-        resave:true,
-        saveUninitialized:true,
+        resave: true,
+        saveUninitialized: true,
         store: new MongoStore({
             url: mongoDBURI
         })
@@ -44,7 +48,14 @@ module.exports = (() => {
         extended: true
     }));
 
-    let db = pmongo(mongoDBURI)
+    mongoClient.connect(mongoDBURI)
+        .then((connected) => {
+            console.log('connected to mongo')
+            db = connected
+        })
+        .catch(err => {
+            console.log('error connecting to mongo', err)
+        })
 
     let authFilter = (req, res, next) => {
         console.log('authFilter, cookies', req.cookies)
@@ -57,9 +68,14 @@ module.exports = (() => {
                 })
                 .then((user) => {
                     console.log('looked up user', user)
-                    req.session.loggedInUser = user
-                    req.session.isLoggedIn = true;
-                    next()
+                    if (!user) {
+                        console.log('no user found, rejected')
+                        res.sendStatus(401)
+                    } else {
+                        req.session.loggedInUser = user
+                        req.session.isLoggedIn = true;
+                        next()
+                    }
                 })
                 .catch((err) => {
                     console.log('error on remember me', err)
