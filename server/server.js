@@ -143,7 +143,13 @@ module.exports = (() => {
                     user_id: response.user_id
                 }, response, {
                     upsert: true
-                });
+                })
+                .then(() => {
+                    console.log('updated / inserted user')
+                })
+                catch(err => {
+                    console.log('error inserting user',err)
+                })
 
                 // drop remember-me cookie
                 res.cookie(rememberMeCookieName, response.user_id, {
