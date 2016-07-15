@@ -80,6 +80,16 @@
                   $window.location.href = authUrl.replace('##REDIRECT_TO##', redirectTo) + '&connection=facebook';
               };
 
+              $scope.linkedinLogin = function() {
+                  $log.debug('doing linkedin login');
+                  $window.location.href = authUrl.replace('##REDIRECT_TO##', redirectTo) + '&connection=linkedin';
+              };
+
+              $scope.amazonLogin = function() {
+                  $log.debug('doing amazon login');
+                  $window.location.href = authUrl.replace('##REDIRECT_TO##', redirectTo) + '&connection=amazon';
+              };
+
               $scope.hello = 'world';
           }
       ]);
