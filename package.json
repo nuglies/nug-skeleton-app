@@ -10,13 +10,14 @@
     "start": "node server/server2.js"
   },
   "engines": {
-    "node": "6.1"
+    "node": "5.10.1"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.15.0",
     "bower": "^1.7.9",
+    "connect-mongo": "^1.2.1",
     "cookie-parser": "^1.4.3",
     "express": "^4.13.4",
     "express-session": "^1.13.0",

@@ -16,23 +16,28 @@ const path = require('path')
 const http = require('http')
 const restClient = require('request-promise')
 const cookieParser = require('cookie-parser');
+const MongoStore = require('connect-mongo')(session)
 
 module.exports = (() => {
 
     const rememberMeCookieName = 'nugliRememberMe'
 
-    let port = process.env.PORT || 5000
+    let port = process.env.PORT || 3000
 
     let defaultMongoDBURI = 'mongodb://localhost/nugli'
     let mongoDBURI = process.env.MONGODB_URI || defaultMongoDBURI
+    console.log('mongoDBURI', mongoDBURI)
 
     let app = express()
     app.use(express.static(path.join(__dirname, '../client')));
 
     app.use(session({
         secret: 'uuddd77788998sdfsdfh----',
-        saveUninitialized: true,
-        resave: false
+        resave:true,
+        saveUninitialized:true,
+        store: new MongoStore({
+            url: mongoDBURI
+        })
     }));
     app.use(bodyParser.json())
     app.use(bodyParser.urlencoded({
@@ -142,11 +147,12 @@ module.exports = (() => {
     }
 
     app.use(cookieParser())
+    app.use(morgan('combined'))
     app.use(authFilter)
 
     app.get('/checkLoggedIn', (req, res, next) => {
         console.log('checkLoggedIn')
-            res.status(200).json(req.session.loggedInUser)
+        res.status(200).json(req.session.loggedInUser)
     })
 
     app.post('/auth0Callback', auth0CallbackHandler)
