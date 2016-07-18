@@ -170,7 +170,7 @@ module.exports = (() => {
 
     app.use(cookieParser())
     app.use(morgan('combined'))
-    //app.use(authFilter)
+    app.use(authFilter)
 
     app.get('/checkLoggedIn', (req, res, next) => {
         console.log('checkLoggedIn')
@@ -179,22 +179,9 @@ module.exports = (() => {
 
     app.post('/auth0Callback', auth0CallbackHandler)
 
-
-
-
     let dashboardHandler = (req, res, next) => {
-        /*
-        let mockData = [
-            'dashboard item one',
-            'dashboard item two',
-            'dashboard item three'
-        ]
-        */
 
 
-    /**
-     * HOW TO Make an HTTP Call - GET
-     */
     // options for GET
     var optionsget = {
         host : 'cjparker.us', // here only the domain name
@@ -209,18 +196,10 @@ module.exports = (() => {
     var reqGet = http.request(optionsget, function(res2) {
         console.info("statusCode: ", res.statusCode);
         res.status = res2.statusCode;
-        //res.json("statusCode: ", res.statusCode)
-        // uncomment it for header details
-      //console.log("headers: ", res.headers);
 
         var content="";
         res2.on('data', function(d) {
-           // console.info('GET result:\n');
-            //process.stdout.write(d);
-           // console.info('\n\nCall completed');
-            //console.info("result:", d)
-            //var jd = encoding.convert(d, "UTF-8");
-            //console.info(d);
+
             content += d;
         });
 
