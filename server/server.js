@@ -170,7 +170,7 @@ module.exports = (() => {
 
     app.use(cookieParser())
     app.use(morgan('combined'))
-    app.use(authFilter)
+    //app.use(authFilter)
 
     app.get('/checkLoggedIn', (req, res, next) => {
         console.log('checkLoggedIn')
@@ -180,6 +180,88 @@ module.exports = (() => {
     app.post('/auth0Callback', auth0CallbackHandler)
 
 
+
+
+    let dashboardHandler = (req, res, next) => {
+        /*
+        let mockData = [
+            'dashboard item one',
+            'dashboard item two',
+            'dashboard item three'
+        ]
+        */
+
+
+    /**
+     * HOW TO Make an HTTP Call - GET
+     */
+    // options for GET
+    var optionsget = {
+        host : 'cjparker.us', // here only the domain name
+        // (no http/https !)
+        //port : 80,
+        path : '/nug/api/rawData', // the rest of the url with parameters if needed
+        method : 'GET' // do GET
+    };
+
+
+    // do the GET request
+    var reqGet = http.request(optionsget, function(res2) {
+        console.info("statusCode: ", res.statusCode);
+        res.status = res2.statusCode;
+        //res.json("statusCode: ", res.statusCode)
+        // uncomment it for header details
+      //console.log("headers: ", res.headers);
+
+        var content="";
+        res2.on('data', function(d) {
+           // console.info('GET result:\n');
+            //process.stdout.write(d);
+           // console.info('\n\nCall completed');
+            //console.info("result:", d)
+            //var jd = encoding.convert(d, "UTF-8");
+            //console.info(d);
+            content += d;
+        });
+
+        res2.on('end', function () {
+                // remove 'undefined that appears before JSON for some reason
+                ////content = JSON.parse(content.substring(9, content.length));
+                res.setHeader('Content-Type', 'application/json');
+               // console.info(content);
+                res.json(content);
+        });
+
+    });
+
+    reqGet.end();
+    reqGet.on('error', function(e) {
+        console.error(e);
+    });
+
+
+        //res.json(mockData)
+    }
+
+    app.get('/dashboard', dashboardHandler)
+
+ app.get('/sensors', (req, res) => {
+
+
+     var getSensorsForCompany = '[{"_id":"5780754691b08ab10ffbd6ed","sensorName":"Sensor Clone","strain":"Kush","growState":"Clone","customerid":"5780746f91b08ab10ffbd6e9"},{"_id":"578074f591b08ab10ffbd6ec","sensorName":"Sensor Flower","strain":"Kush","growState":"Flower","customerid":"5780746f91b08ab10ffbd6e9"},{"_id":"5780747c91b08ab10ffbd6eb","sensorName":"first sensor","strain":"kush","growState":"Grow","customerid":"5780746f91b08ab10ffbd6e9"}]';
+    res.status(200).json(getSensorsForCompany)
+    })
+
+
+
+
+
+    app.get('/sensordefaults', (req, res) => {
+
+     var getSettingsForCompany = '{ "customer_id" : 0, "par" : [ { "min" : 800, "max" : 1400, "blue" : 453, "red" : 600 } ], "growStates" : [ { "growState" : "flower", "settings" : [ { "lightsOn" : { "time" : "06:00", "heat" : [ { "max" : 95, "min" : 75 } ], "humidity" : [ { "max" : 65, "min" : 55 } ] }, "lightsOff" : { "time" : "18:00", "heat" : [ { "max" : 72, "min" : 62 } ], "humidity" : [ { "max" : 90, "min" : 75 } ] } } ] }, { "growState" : "clone", "settings" : [ { "lightsOn" : { "time" : "06:00", "heat" : [ { "max" : 72, "min" : 69 } ], "humidity" : [ { "max" : 65, "min" : 55 } ] }, "lightsOff" : { "time" : "20:00", "heat" : [ { "max" : 72, "min" : 69 } ], "humidity" : [ { "max" : 65, "min" : 55 } ] } } ] }, { "growState" : "grow", "settings" : [ { "lightsOn" : { "time" : "09:00", "heat" : [ { "max" : 72, "min" : 69 } ], "humidity" : [ { "max" : 65, "min" : 55 } ] }, "lightsOff" : { "time" : "16:00", "heat" : [ { "max" : 72, "min" : 69 } ], "humidity" : [ { "max" : 65, "min" : 55 } ] } } ] } ] }';
+
+        res.status(200).json(getSettingsForCompany)
+    })
 
 
     app.listen(port, () => {
