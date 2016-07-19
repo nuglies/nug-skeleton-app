@@ -88,7 +88,10 @@ module.exports = (() => {
 
             var allowedURLs = [
                 '/login',
-                '/auth0Callback'
+                '/auth0Callback',
+                '/dashboard',
+                '/sensordefaults',
+                '/sensors'
             ];
 
             var allowedPatterns = [
