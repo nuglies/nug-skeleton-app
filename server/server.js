@@ -14,7 +14,6 @@ const moment = require('moment')
 const Q = require('q')
 const argv = require('minimist')(process.argv.slice(2))
 const path = require('path')
-const http = require('http')
 const restClient = require('request-promise')
 const cookieParser = require('cookie-parser');
 const MongoStore = require('connect-mongo')(session)
@@ -88,10 +87,7 @@ module.exports = (() => {
 
             var allowedURLs = [
                 '/login',
-                '/auth0Callback',
-                '/dashboard',
-                '/sensordefaults',
-                '/sensors'
+                '/auth0Callback'
             ];
 
             var allowedPatterns = [
@@ -143,16 +139,16 @@ module.exports = (() => {
 
                 // update our DB
                 db.collection('users').update({
-                    user_id: response.user_id
-                }, response, {
-                    upsert: true
-                })
-                .then(() => {
-                    console.log('updated / inserted user')
-                })
-                .catch(err => {
-                    console.log('error inserting user',err)
-                })
+                        user_id: response.user_id
+                    }, response, {
+                        upsert: true
+                    })
+                    .then(() => {
+                        console.log('updated / inserted user')
+                    })
+                    .catch(err => {
+                        console.log('error inserting user', err)
+                    })
 
                 // drop remember-me cookie
                 res.cookie(rememberMeCookieName, response.user_id, {
@@ -182,67 +178,193 @@ module.exports = (() => {
 
     app.post('/auth0Callback', auth0CallbackHandler)
 
+
+
     let dashboardHandler = (req, res, next) => {
 
+        let rawDataRequest = {
+            method: 'GET',
+            uri: 'http://cjparker.us/nug/api/rawData',
+            json: true
+        }
 
-    // options for GET
-    var optionsget = {
-        host : 'cjparker.us', // here only the domain name
-        // (no http/https !)
-        //port : 80,
-        path : '/nug/api/rawData', // the rest of the url with parameters if needed
-        method : 'GET' // do GET
-    };
-
-
-    // do the GET request
-    var reqGet = http.request(optionsget, function(res2) {
-        console.info("statusCode: ", res.statusCode);
-        res.status = res2.statusCode;
-
-        var content="";
-        res2.on('data', function(d) {
-
-            content += d;
-        });
-
-        res2.on('end', function () {
-                // remove 'undefined that appears before JSON for some reason
-                ////content = JSON.parse(content.substring(9, content.length));
-                res.setHeader('Content-Type', 'application/json');
-               // console.info(content);
-                res.json(content);
-        });
-
-    });
-
-    reqGet.end();
-    reqGet.on('error', function(e) {
-        console.error(e);
-    });
-
-
-        //res.json(mockData)
+        restClient(rawDataRequest)
+            .then(rawDataResponse => {
+                console.log('rawData response is', rawDataResponse)
+                res.status(200).json(rawDataResponse)
+            })
+            .catch(err => {
+                console.log('got error in rawData request', err)
+            })
     }
 
     app.get('/dashboard', dashboardHandler)
 
- app.get('/sensors', (req, res) => {
 
 
-     var getSensorsForCompany = '[{"_id":"5780754691b08ab10ffbd6ed","sensorName":"Sensor Clone","strain":"Kush","growState":"Clone","customerid":"5780746f91b08ab10ffbd6e9"},{"_id":"578074f591b08ab10ffbd6ec","sensorName":"Sensor Flower","strain":"Kush","growState":"Flower","customerid":"5780746f91b08ab10ffbd6e9"},{"_id":"5780747c91b08ab10ffbd6eb","sensorName":"first sensor","strain":"kush","growState":"Grow","customerid":"5780746f91b08ab10ffbd6e9"}]';
-    res.status(200).json(getSensorsForCompany)
+    app.get('/sensors', (req, res) => {
+
+        let sensorMockData = `
+        [
+            {
+                "_id": "5780754691b08ab10ffbd6ed",
+                "customerid": "5780746f91b08ab10ffbd6e9",
+                "growState": "Clone",
+                "sensorName": "Sensor Clone",
+                "strain": "Kush"
+            },
+            {
+                "_id": "578074f591b08ab10ffbd6ec",
+                "customerid": "5780746f91b08ab10ffbd6e9",
+                "growState": "Flower",
+                "sensorName": "Sensor Flower",
+                "strain": "Kush"
+            },
+            {
+                "_id": "5780747c91b08ab10ffbd6eb",
+                "customerid": "5780746f91b08ab10ffbd6e9",
+                "growState": "Grow",
+                "sensorName": "first sensor",
+                "strain": "kush"
+            }
+        ]
+        `
+        res.status(200).json(sensorMockData)
     })
-
 
 
 
 
     app.get('/sensordefaults', (req, res) => {
 
-     var getSettingsForCompany = '{ "customer_id" : 0, "par" : [ { "min" : 800, "max" : 1400, "blue" : 453, "red" : 600 } ], "growStates" : [ { "growState" : "flower", "settings" : [ { "lightsOn" : { "time" : "06:00", "heat" : [ { "max" : 95, "min" : 75 } ], "humidity" : [ { "max" : 65, "min" : 55 } ] }, "lightsOff" : { "time" : "18:00", "heat" : [ { "max" : 72, "min" : 62 } ], "humidity" : [ { "max" : 90, "min" : 75 } ] } } ] }, { "growState" : "clone", "settings" : [ { "lightsOn" : { "time" : "06:00", "heat" : [ { "max" : 72, "min" : 69 } ], "humidity" : [ { "max" : 65, "min" : 55 } ] }, "lightsOff" : { "time" : "20:00", "heat" : [ { "max" : 72, "min" : 69 } ], "humidity" : [ { "max" : 65, "min" : 55 } ] } } ] }, { "growState" : "grow", "settings" : [ { "lightsOn" : { "time" : "09:00", "heat" : [ { "max" : 72, "min" : 69 } ], "humidity" : [ { "max" : 65, "min" : 55 } ] }, "lightsOff" : { "time" : "16:00", "heat" : [ { "max" : 72, "min" : 69 } ], "humidity" : [ { "max" : 65, "min" : 55 } ] } } ] } ] }';
+        let settingsMockData = `
+        {
+            "customer_id": 0,
+            "growStates": [
+                {
+                    "growState": "flower",
+                    "settings": [
+                        {
+                            "lightsOff": {
+                                "heat": [
+                                    {
+                                        "max": 72,
+                                        "min": 62
+                                    }
+                                ],
+                                "humidity": [
+                                    {
+                                        "max": 90,
+                                        "min": 75
+                                    }
+                                ],
+                                "time": "18:00"
+                            },
+                            "lightsOn": {
+                                "heat": [
+                                    {
+                                        "max": 95,
+                                        "min": 75
+                                    }
+                                ],
+                                "humidity": [
+                                    {
+                                        "max": 65,
+                                        "min": 55
+                                    }
+                                ],
+                                "time": "06:00"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "growState": "clone",
+                    "settings": [
+                        {
+                            "lightsOff": {
+                                "heat": [
+                                    {
+                                        "max": 72,
+                                        "min": 69
+                                    }
+                                ],
+                                "humidity": [
+                                    {
+                                        "max": 65,
+                                        "min": 55
+                                    }
+                                ],
+                                "time": "20:00"
+                            },
+                            "lightsOn": {
+                                "heat": [
+                                    {
+                                        "max": 72,
+                                        "min": 69
+                                    }
+                                ],
+                                "humidity": [
+                                    {
+                                        "max": 65,
+                                        "min": 55
+                                    }
+                                ],
+                                "time": "06:00"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "growState": "grow",
+                    "settings": [
+                        {
+                            "lightsOff": {
+                                "heat": [
+                                    {
+                                        "max": 72,
+                                        "min": 69
+                                    }
+                                ],
+                                "humidity": [
+                                    {
+                                        "max": 65,
+                                        "min": 55
+                                    }
+                                ],
+                                "time": "16:00"
+                            },
+                            "lightsOn": {
+                                "heat": [
+                                    {
+                                        "max": 72,
+                                        "min": 69
+                                    }
+                                ],
+                                "humidity": [
+                                    {
+                                        "max": 65,
+                                        "min": 55
+                                    }
+                                ],
+                                "time": "09:00"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "par": [
+                {
+                    "blue": 453,
+                    "max": 1400,
+                    "min": 800,
+                    "red": 600
+                }
+            ]
+        }
+        `
 
-        res.status(200).json(getSettingsForCompany)
+        res.status(200).json(settingsMockData)
     })
 
 

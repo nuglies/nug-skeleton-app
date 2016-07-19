@@ -62,7 +62,10 @@
               }
 
               var authUrl = 'https://nugs.auth0.com/authorize/?response_type=token&client_id=TdtdYCDQHSR3TtNgsMuCXHfjHDyxMsmB&redirect_uri=##REDIRECT_TO##&state=VALUE_THAT_SURVIVES_REDIRECTS&scope=openid'
-              var redirectTo = $window.location.protocol + '//' + $window.location.hostname + '/';
+              var portNum = $window.location.port;
+              var port = portNum == 80 || portNum == 443 || portNum == 0 ? '' : ':' + portNum;
+
+              var redirectTo = $window.location.protocol + '//' + $window.location.hostname + port + '/';
               console.log('will redirect to ', redirectTo)
 
               $scope.twitterLogin = function() {
@@ -105,7 +108,7 @@
   nugNgApp.controller('welcomeCtrl', ['$log', '$scope', '$rootScope', '$http', '$location', '$window',
       function($log, $scope, $rootScope, $http, $location, $window) {
           console.log('welcome controller')
-          $scope.displayName = $rootScope.loggedInUser ?  $rootScope.loggedInUser.nickname || $rootScope.loggedInUser.given_name : 'unknown';
+          $scope.displayName = $rootScope.loggedInUser ? $rootScope.loggedInUser.nickname || $rootScope.loggedInUser.given_name : 'unknown';
           $scope.picURL = $rootScope.loggedInUser ? $rootScope.loggedInUser.picture : 'pics/unknown.png';
       }
   ]);
