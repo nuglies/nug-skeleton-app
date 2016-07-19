@@ -229,7 +229,7 @@ module.exports = (() => {
             }
         ]
         `
-        res.status(200).json(sensorMockData)
+        res.status(200).json(JSON.parse(sensorMockData))
     })
 
 
@@ -364,7 +364,7 @@ module.exports = (() => {
         }
         `
 
-        res.status(200).json(settingsMockData)
+        res.status(200).json(JSON.parse(settingsMockData))
     })
 
 
