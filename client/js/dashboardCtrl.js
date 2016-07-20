@@ -35,6 +35,10 @@ nugNgApp.controller(
                     asyncSensors.getSensorsForCompany(customerid)
                         .then(function(sensorData) {
                         var chartArr = {};
+                        //console.log("38");
+                        //console.log(sensorData);
+
+                        sensorData = sensorData.data;
                         for (var i = 0; i < sensorData.length; i++) {
                             var sensorGS = sensorData[i].growState.toLowerCase();
                             for (var x = 0; x < $scope.settingsObj.length; x++) {
@@ -45,8 +49,8 @@ nugNgApp.controller(
                             }
                             chartArr[sensorGS] = feedLooper(sensorData[i], sensorFeed, gsKey);
                         }
-
-                        console.log(chartArr);
+                       // console.log("48");
+                       // console.log(chartArr);
                         $scope.chartData = chartArr;
                     }, function(err) {
                         $log.error('getSensorsForCompany returned error', err);
@@ -275,15 +279,17 @@ nugNgApp.controller(
 
                         //make it globally available
                         $scope.settingsObj = settingsObj;
+                        //console.log(sensorFeed);
 
+                        /*
                         var sensorFP = JSON.parse(sensorFeed, function(k, v) {
                             return v; // return everything else unchanged
                         });
-
+                        */
 
                         //for demo purposes only, run through feedLooper for each Sensor in sensorlist
 
-                        getSensors(sensorFP);
+                        getSensors(sensorFeed.data);
 
 
                         //console.log(sensorObj);
@@ -311,7 +317,7 @@ nugNgApp.controller(
 
 nugNgApp.factory('sensorFeed', ['$http', function($http) {
 
-    console.log('dashboard factory');
+    //console.log('dashboard factory');
     var o = {
         sensors: []
     };
@@ -319,7 +325,7 @@ nugNgApp.factory('sensorFeed', ['$http', function($http) {
     o.get = function(id) {
         return $http.get('/users/' + id).then(function(res) {
 
-            console.log(res.data);
+           // console.log(res.data);
             return res.data;
         });
     };
@@ -328,7 +334,7 @@ nugNgApp.factory('sensorFeed', ['$http', function($http) {
         return $http.get('/dashboard').success(function(data) {
             angular.copy(data, o.sensors);
             //console.log("posts data");
-            console.log(data);
+            //console.log(data);
         });
 
 
