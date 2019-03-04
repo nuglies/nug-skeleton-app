@@ -184,7 +184,8 @@ module.exports = (() => {
 
         let rawDataRequest = {
             method: 'GET',
-            uri: 'http://cjparker.us/nug/api/rawData',
+            //uri: 'http://cjparker.us/nug/api/rawData',
+            uri: 'https://8mkhsxzxj9.execute-api.us-east-2.amazonaws.com/api/rawData',
             json: true
         }
 
