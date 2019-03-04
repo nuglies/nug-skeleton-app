@@ -188,6 +188,9 @@ nugNgApp.controller(
                 }
 
                 function feedLooper(sensorData, sensorFeed, gsKey) {
+                    if (!sensorFeed) {
+                        return {}
+                    }
 
                     var settingsObj = $scope.settingsObj[gsKey];
 
