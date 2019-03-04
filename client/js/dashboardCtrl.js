@@ -144,12 +144,17 @@ nugNgApp.controller(
 
 
                 function nugsLightComposite(sensorFeed) {
+                    if (!sensorFeed) {
+                        return -1;
+                    }
+                    var recLight;
                     var RGB = sensorFeed.RGB;
                     var R = RGB.R;
                     var G = RGB.G;
                     var B = RGB.B;
 
                     var W = RGB.R + RGB.G + RGB.B;
+
 
 
                     // var par_R = parCalc(R);
@@ -162,12 +167,12 @@ nugNgApp.controller(
                     } else if (W > 100 && W <= 400) {
 
                         //light levels are low - could be an error
-                        var recLight = -1;
+                        recLight = -1;
 
 
                     } else {
                         //lights are on
-                        var recLight = 1;
+                        recLight = 1;
                     }
                     //console.log("recLight: " + recLight);
                     return recLight;
