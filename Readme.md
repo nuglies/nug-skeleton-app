@@ -34,3 +34,5 @@ To deploy a feature branch to heroku (for example feature/customersettings)
 git push heroku feature/customersettings:master
 ```
 This says, 'take our feature/customersettings branch and deploy it to the heroku master branch'.  Because heroku only likes to deploy the master branch
+
+March 3rd 2019, connected to git master branch for auto deploy
