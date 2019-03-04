@@ -60,6 +60,9 @@ nugNgApp.controller(
 
 
                 function lightCycle(settingsObj, sensorFeed) {
+                    if (!sensorFeed) {
+                        return 0;
+                    }
                     var dateOnly = sensorFeed.dateTime.split("T");
                     var lightsOff = new Date(dateOnly[0] + " " + settingsObj.lightsOff.time);
                     var settingsHourOff = lightsOff.getHours();
