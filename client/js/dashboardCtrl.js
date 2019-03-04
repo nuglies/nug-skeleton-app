@@ -243,7 +243,7 @@ nugNgApp.controller(
                         lightArr[i] = lightErr;
                         //console.log(workingSettings);
 
-                        var tempF = sensorFeed[i].tempF;
+                        var tempF = sensorFeed[i] ? sensorFeed[i].tempF : 0;
 
                         if (tempF > workingSettings.heat[0].min && tempF < workingSettings.heat[0].max) {
 
@@ -255,7 +255,7 @@ nugNgApp.controller(
 
                         tempArr[i] = tempErr;
 
-                        var humidity = sensorFeed[i].humidity;
+                        var humidity = sensorFeed[i] ? sensorFeed[i].humidity : 0;
 
                         if (humidity > workingSettings.humidity[0].min && humidity < workingSettings.humidity[0].max) {
 
