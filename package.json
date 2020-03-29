@@ -10,7 +10,7 @@
     "start": "node server/server2.js"
   },
   "engines": {
-    "node": "5.10.1"
+    "node": "12"
   },
   "author": "",
   "license": "MIT",
